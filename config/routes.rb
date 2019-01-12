@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
-
-  devise_for :users
+	root 'dashboards#index'
+	
+	devise_for :users
+	
+	resources :users do
+		resources :cars
+	end
 end

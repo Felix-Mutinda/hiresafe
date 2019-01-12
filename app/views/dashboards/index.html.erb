@@ -1,0 +1,80 @@
+
+<div class="wrapper">
+    <div class="sidebar" data-color="blue" data-image='/assets/images/sidebar-5.jpg' >
+
+    <!--
+
+        Tip 1: you can change the color of the sidebar using: data-color="blue | azure | green | orange | red | purple"
+        Tip 2: you can also add an image using data-image tag
+
+    -->
+
+    	<div class="sidebar-wrapper">
+            <div class="logo">
+                <a href="http://www.hiresafe.com" class="simple-text">
+                    <%= image_tag "nice-car.jpg", class: "car-logo" %>
+                </a>
+            </div>
+
+            <ul class="nav">
+                <li class="active">
+                    <a href="www.hiresafe.com">
+                        <i class="fa fa-car"></i>
+                        <p>Dashboard</p>
+                    </a>
+                </li>
+
+            </ul>
+    	</div>
+    </div>
+
+    <div class="main-panel">
+        <nav class="navbar navbar-default navbar-fixed">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="wwww.hiresafe.com">Hire Safe</a>
+                </div>
+                <div class="collapse navbar-collapse">
+             
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                           <a href=<%= destroy_user_session_path %> data-method="delete" >
+                               Sign Out
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+					Your email is: <%= @user %>
+                </div>
+            </div>
+        </div>
+
+
+        <footer class="footer">
+            <div class="container-fluid">
+                <div class="pull-left">
+                    <strong>Contact Us:</strong> <br>
+						<i class="fa fa-phone-square"></i> +2547000000001 <br>
+						<i class="fa fa-inbox"></i>  hiresafe@gmail.com <br>
+                </div>
+                <p class="copyright pull-right">
+                    &copy; <script>document.write(new Date().getFullYear())</script> <a href="http://www.hiresafe.com">Hire Safe</a>, Just hire, no worries
+                </p>
+            </div>
+        </footer>
+
+    </div>
+</div>
