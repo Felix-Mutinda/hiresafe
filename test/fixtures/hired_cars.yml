@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  car: one
+  user: one
+  date: 2019-01-12 20:54:31
+  days: 1
+
+two:
+  car: two
+  user: two
+  date: 2019-01-12 20:54:31
+  days: 1

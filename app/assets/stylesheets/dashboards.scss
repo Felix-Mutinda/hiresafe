@@ -2,6 +2,21 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+.hiresafe-header{
+	color: #333 !important;
+}
+
 .car-logo {
 	width: 150px;
 }
+
+.alert {
+	position: relative;
+	width: 100%;
+	z-index: 1000 !important;
+}
+
+.gold-color {
+	color: #FFD700;
+}
+
