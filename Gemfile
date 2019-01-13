@@ -67,8 +67,8 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'devise'
 
 # bootstrap front-end/ jquery
-gem 'bootstrap'
-gem 'jquery-rails'
+# gem 'bootstrap'
+# gem 'jquery-rails'
 
 group :production do
 	gem 'pg' # postgre sql
