@@ -68,7 +68,7 @@ gem 'devise'
 
 # bootstrap front-end/ jquery
 # gem 'bootstrap'
-# gem 'jquery-rails'
+gem 'jquery-rails'
 
 group :production do
 	gem 'pg' # postgre sql
