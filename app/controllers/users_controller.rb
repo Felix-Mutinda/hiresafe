@@ -5,15 +5,8 @@ class UsersController < Devise::RegistrationsController
 	end
 	
 	def create
-		render plain: user_params
+		super do |resource|
+		  resource.balance = 10000
+		end
 	end
-	
-	private
-		def sign_up_params
-			params.require(:user).permit(:name, :nat_id, :location, :email, :password, :password_confirmation)
-		end
-
-		def account_update_params
-			params.require(:user).permit(:name, :nat_id, :location, :email, :password, :password_confirmation, :current_password)
-		end
 end

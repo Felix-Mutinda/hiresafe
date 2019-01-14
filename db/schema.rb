@@ -43,6 +43,7 @@ ActiveRecord::Schema.define(version: 2019_01_12_175431) do
     t.string "name"
     t.integer "nat_id"
     t.integer "balance"
+    t.string "user_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_users_on_email", unique: true

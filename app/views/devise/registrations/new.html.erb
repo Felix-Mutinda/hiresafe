@@ -29,6 +29,11 @@
 				<%= f.label :email %><br />
 				<%= f.email_field :email, class: "form-control" %>
 			  </div>
+			  
+			  <div class="field form-group">
+				<%= f.label :user_type %><br />
+				<%= select_tag(:user_type, options_for_select([['Client', 1], ['Car Owner', 2]], 1), class: "form-control") %>
+			  </div>
 
 			  <div class="field form-group">
 				<%= f.label :password %>

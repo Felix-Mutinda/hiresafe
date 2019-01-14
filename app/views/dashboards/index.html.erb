@@ -52,7 +52,8 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="http://wwww.hiresafe.com">Hire Safe</a>
+                    <a class="navbar-brand" href=<%= edit_user_registration_path%> ><%= current_user.name %></a>
+                   
                 </div>
                 <div class="collapse navbar-collapse">
              
@@ -93,6 +94,12 @@
 										</div>
 										<hr>
 									<% end %>
+								<% else %>
+									You don't have any car listed for now.<br>
+									Click
+									<%= link_to "Here", new_user_car_path(@user) %>
+									to add one.
+									
 								<% end %>
                             </div>
 						</div>
