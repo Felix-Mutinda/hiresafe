@@ -1,15 +1,40 @@
 class HiredCarsController < ApplicationController
 
+	def index
+		@user = current_user
+		@my_hired_cars = HiredCar.where(user_id: @user.id)
+		
+		@car_details = []
+		Car.all.each do |car|
+			@my_hired_cars.all.each do |h_c|
+				if car.id == h_c.car_id
+					@car_details.push(car)
+					break
+				end
+			end
+		end
+	end
+	
 	def new
-		@user = User.find_by(id: params[:user_id])
+		@car = Car.find_by(id: params[:car_id])
 	end
 	
 	
 	def create
-		@user = User.find_by(id: params[:user_id])
-		@hired_car = @user.hired_cars.create(hired_car_params)
+		@user = current_user
+		@car = Car.find_by(id: params[:car_id])
 		
-		redirect_to user_hired_cars_path(@user)
+		if !HiredCar.find_by(car_id: params[:car_id])
+			@hired_car = @car.hired_cars.create(hired_car_params)
+			HiredCar.update(@hired_car.id, user_id: @user.id)
+		end
+		
+		#render plain: params
+		redirect_to car_hired_cars_path(@car)
+	end
+	
+	def destroy
+		
 	end
 	
 	

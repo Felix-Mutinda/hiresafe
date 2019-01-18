@@ -8,7 +8,7 @@ Rails.application.routes.draw do
 		resources :cars 
 	end
 	
-	resources :users do
+	resources :cars do
 		resources :hired_cars
 	end
 end

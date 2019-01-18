@@ -1,4 +1,6 @@
 class CarsController < ApplicationController
+	
+	
 	def new
 		@user = User.find_by(id: params[:user_id])
 	end

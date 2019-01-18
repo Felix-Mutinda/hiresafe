@@ -1,4 +1,4 @@
 class Car < ApplicationRecord
 	belongs_to :user
-	has_one :hired_car
+	has_many :hired_cars
 end

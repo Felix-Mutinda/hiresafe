@@ -1,0 +1,15 @@
+<div class="row">
+	<div class="col-md-4">
+		<i class="fa fa-car fa-5x" style="color:#434371;"></i>
+	</div>
+
+	<div class="col-md-8">
+		<strong>Model: </strong><em> <%= car.model %></em><br>
+		<strong>Transmission: </strong><em> <%= car.transmission %></em><br>
+		<strong>Pick-Up Location: </strong><em> <%= car.location %></em><br>
+		<strong>Price: </strong><em> <%= car.price %> per day</em><br>
+	</div>
+</div>
+<a href=<%= new_car_hired_car_path(car) %> class="btn btn-primary btn-fill pull-right">View</a>
+<div class="clearfix"></div>
+<hr>

@@ -24,13 +24,13 @@
                     </a>
                 </li>
 
-                <li>
-                    <a href=<%= car_hired_cars_path(@car) %> >
+				<li>
+                    <a href="#" >
                         <i class="fa fa-key"></i>
                         <p>Hired Cars</p>
                     </a>
                 </li>
-
+                
                 <li>
                     <a href=<%= edit_user_registration_path%> >
                         <i class="fa fa-user"></i>
@@ -75,11 +75,11 @@
 					<div class="col-md-6">
 						<div class="card">
 							<div class="header">
-                                <h4 class="title">Amazing Cars Ready For Hire</h4>
+                                <h4 class="title">Your Currently Hired Cars</h4>
                             </div>
                             <div class="content">
-                                <% if @available_cars.any? %>
-									<% @available_cars.each do |car| %>
+                                <% if @car_details.any? %>
+									<% @car_details.each do |car| %>
 										<div class="row">
 											<div class="col-md-4">
 												<i class="fa fa-car fa-5x" style="color:#434371;"></i>
@@ -92,14 +92,14 @@
 												<strong>Price: </strong><em> <%= car.price %> per day</em><br>
 											</div>
 										</div>
-										<a href=<%= new_car_hired_car_path(car) %> class="btn btn-primary btn-fill pull-right">View</a>
+										<%= link_to "Return", "#", method: :delete, class: "btn btn-danger btn-fill pull-right" %>
 										<div class="clearfix"></div>
 										<hr>
 									<% end %>
 								<% else %>
-									Unfortunately none are available for now!!
-									<i class="fa fa-sad"></i>
-									<i class="fa fa-sad"></i>
+									You Haven't Hired a Car Yet!
+									<i class="far fa-frown"></i>
+									<i class="far fa-frown"></i>
 								<% end %>
                             </div>
 						</div>
