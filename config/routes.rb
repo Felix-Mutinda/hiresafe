@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
 	root 'dashboards#index'
 	
+	get '/search', to: 'dashboards#search'
 	
 	devise_for :users
 	

@@ -1,5 +1,5 @@
 class DashboardsController < ApplicationController
-	skip_before_action :authenticate_user!, only: [:index, ]
+	skip_before_action :authenticate_user!, only: [:index, :search]
 	
 	def index
 		@user = current_user
@@ -29,12 +29,29 @@ class DashboardsController < ApplicationController
 		else
 			@list_car_path = new_user_session_path
 		end
+		
+	
 	end
 	
-	def index_old
+	def search
 		@user = current_user
 		@car = Car.first
+		@available_cars = Car.all
+
+		if !params[:model].strip.empty?
+			@available_cars = @available_cars.where("model  like ?", '%'+params[:model]+'%')
+		end
 		
+		if !params[:price].strip.empty?
+			@available_cars = @available_cars.where("price  <= ?", params[:price])
+		end
+		
+		if !params[:location].strip.empty?
+			@available_cars = @available_cars.where("location  like ?", '%'+params[:location]+'%')
+		end
+		
+		render "dashboards/search_result"
+=begin		
 		if current_user.user_type == "1" # client
 			@available_cars = []
 			hired = false
@@ -60,5 +77,6 @@ class DashboardsController < ApplicationController
 		else #owner
 			render 'dashboards/owner_index'
 		end
+=end
 	end
 end

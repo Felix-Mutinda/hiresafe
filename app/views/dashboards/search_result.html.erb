@@ -11,7 +11,7 @@
 
     	<div class="sidebar-wrapper">
             <div class="logo">
-                <a href="http://www.hiresafe.com" class="simple-text">
+                <a href="#" class="simple-text">
                     <%= image_tag "nice-car.jpg", class: "car-logo" %>
                 </a>
             </div>
@@ -21,6 +21,13 @@
                     <a href= <%= root_path %> >
                         <i class="fa fa-car"></i>
                         <p>Dashboard</p>
+                    </a>
+                </li>
+
+                <li>
+                    <a href=<%= car_hired_cars_path(@car) %> >
+                        <i class="fa fa-key"></i>
+                        <p>Hired Cars</p>
                     </a>
                 </li>
 
@@ -45,7 +52,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-					<% if @user %>
+                    <% if @user %>
 						<a class="navbar-brand" href=<%= edit_user_registration_path%> ><%= current_user.name %></a>
 					<% else %>
 						<a class="navbar-brand" href="#"><strong>RideKali</strong></a>
@@ -68,45 +75,80 @@
        <div class="content">
             <div class="container-fluid">
                 <div class="row">
-					<div class="col-md-8">
+					<div class="col-md-6">
 						<div class="card">
 							<div class="header">
-                                <h4 class="title">Best Deal Ever!</h4>
+                                <h4 class="title"><%= pluralize(@available_cars.count, "car") %> found</h4>
                             </div>
                             <div class="content">
-								<div class="row">
-									<div class="col-md-4">
-										<i class="fa fa-car fa-5x" style="color:#434371;"></i>
-									</div>
-
-									<div class="col-md-8">
-										<strong>Model: </strong><em> <%= @car.model %></em><br>
-										<strong>Transmission: </strong><em> <%= @car.transmission %></em><br>
-										<strong>Pick-Up Location: </strong><em> <%= @car.location %></em><br>
-										<strong>Price: </strong><em> <%= @car.price %> per day</em><br>
-										
-										<%= form_with(model: [@car, @car.hired_cars.build ], local: true) do |form| %>
-											<div class="row">
-												<div class="col-md-12">
-													<div class="form-group">
-														
-														<strong class="text-info">Days to Hire:</strong>
-														<%= form.number_field :days, class: "form-control", required: "required", min: 1 %>
-													</div>
-												</div>
+                                <% if @available_cars.any? %>
+									<% @available_cars.each do |car| %>
+										<div class="row">
+											<div class="col-md-4">
+												<i class="fa fa-car fa-5x" style="color:#434371;"></i>
 											</div>
-											
-											<%= form.submit "Hire", class: "btn btn-primary btn-fill pull-right" %>
-											<div class="clearfix"></div>
-										<% end %>
-									</div>
-								</div>
-								
+
+											<div class="col-md-8">
+												<strong>Model: </strong><em> <%= car.model %></em><br>
+												<strong>Transmission: </strong><em> <%= car.transmission %></em><br>
+												<strong>Pick-Up Location: </strong><em> <%= car.location %></em><br>
+												<strong>Price: </strong><em> <%= car.price %> per day</em><br>
+											</div>
+										</div>
+										<a href=<%= new_car_hired_car_path(car) %> class="btn btn-primary btn-fill pull-right">View</a>
+										<div class="clearfix"></div>
+										<hr>
+									<% end %>
+								<% else %>
+									<p class="text-warning">Unfortunately none are available for now, Try different search keywords.</p>
+									<i class="icon-sign-blank"></i>
+									<i class="fa fa-sign-blank"></i>
+								<% end %>
                             </div>
 						</div>
 					</div>
 					
-						
+						<div class="col-md-6">
+							<div class="card card-glance">
+								<div class="header">
+									<h4 class="title">At a glance</h4>
+								</div>
+								<div class="content">
+								   <div class="row">
+										<div class="col-md-4">
+											<i class="fa fa-users"></i>
+											<em><strong><%= User.all.count %></strong> Users</em>
+										</div>
+										
+										<div class="col-md-4">
+											<i class="fa fa-car"></i>
+											<em><strong><%= Car.all.count %></strong> Cars</em>
+										</div>
+										
+										<div class="col-md-4">
+											<i class="fa fa-road"></i>
+											<em><strong><%= HiredCar.all.count %></strong> Currently Hired Cars</em>
+										</div>
+										
+								   </div>
+								   <div class="footer">
+										<hr>
+										<div class="row">
+											<div class="col-md-6">
+												<em>We have a 5 star rating.</em>
+											</div>
+											<div class="col-md-6 gold-color">
+												<i class="fa fa-star"></i>
+												<i class="fa fa-star"></i>
+												<i class="fa fa-star"></i>
+												<i class="fa fa-star"></i>
+												<i class="fa fa-star"></i>
+											</div>
+										</div>
+								   </div>
+								</div>
+							</div>
+						</div>
 					</div>
                 </div>
             </div>
@@ -122,7 +164,7 @@
 						<i class="fa fa-inbox"></i>  hiresafe@gmail.com <br>
                 </div>
                 <p class="copyright pull-right">
-                    &copy; 2019 <a href="http://www.hiresafe.com">Hire Safe</a>, Just hire, no worries
+                    &copy; 2019 <a href="#">Hire Safe</a>, Just hire, no worries
                 </p>
             </div>
         </footer>

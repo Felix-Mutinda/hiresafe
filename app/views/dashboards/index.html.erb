@@ -65,8 +65,8 @@
 								</a>
 							</li>
 							<li>
-							   <a href=<%= new_user_registration_path %> class="text-primary">
-								   Signup
+							   <a href=<%= new_user_registration_path %> >
+								   <strong>Signup</strong>
 								</a>
 							</li>
 						<% else %>
@@ -94,7 +94,7 @@
 							</div>
 							
 							<div class="content">
-								<%= form_tag "/", method: "get" do %>
+								<%= form_tag "/search", method: "get" do %>
 									<div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">

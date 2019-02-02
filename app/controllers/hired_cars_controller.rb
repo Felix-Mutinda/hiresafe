@@ -1,5 +1,6 @@
 class HiredCarsController < ApplicationController
-
+	skip_before_action :authenticate_user!, only: [:new, ]
+	
 	def index
 		@user = current_user
 		@my_hired_cars = HiredCar.where(user_id: @user.id)
