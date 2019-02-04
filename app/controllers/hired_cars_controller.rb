@@ -1,5 +1,5 @@
 class HiredCarsController < ApplicationController
-	skip_before_action :authenticate_user!, only: [:new, ]
+	skip_before_action :authenticate_user!, only: [:new, :create]
 	
 	def index
 		@user = current_user
@@ -25,13 +25,20 @@ class HiredCarsController < ApplicationController
 		@user = current_user
 		@car = Car.find_by(id: params[:car_id])
 		
-		if !HiredCar.find_by(car_id: params[:car_id])
-			@hired_car = @car.hired_cars.create(hired_car_params)
-			HiredCar.update(@hired_car.id, user_id: @user.id)
+		if user_signed_in?
+			if !HiredCar.find_by(car_id: params[:car_id])
+				@hired_car = @car.hired_cars.create(hired_car_params)
+				HiredCar.update(@hired_car.id, user_id: @user.id)
+			end
+
+			#render plain: params
+			redirect_to car_hired_cars_path(@car)
+		else
+			session[:hire_car_data] = car_id: params[:car_id], hired_car_params: hired_car_params
+			flash[:alert] = "To Complete this transaction please login"
+			
+			redirect_to new_user_session_path
 		end
-		
-		#render plain: params
-		redirect_to car_hired_cars_path(@car)
 	end
 	
 	def destroy
