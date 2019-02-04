@@ -39,7 +39,7 @@ class DashboardsController < ApplicationController
 		@available_cars = Car.all
 
 		if !params[:model].strip.empty?
-			@available_cars = @available_cars.where("model  ilike ?", '%'+params[:model]+'%')
+			@available_cars = @available_cars.where("model  like ?", '%'+params[:model]+'%')
 		end
 		
 		if !params[:price].strip.empty?
@@ -47,7 +47,7 @@ class DashboardsController < ApplicationController
 		end
 		
 		if !params[:location].strip.empty?
-			@available_cars = @available_cars.where("location  ilike ?", '%'+params[:location]+'%')
+			@available_cars = @available_cars.where("location  like ?", '%'+params[:location]+'%')
 		end
 		
 		render "dashboards/search_result"
