@@ -34,7 +34,7 @@ class HiredCarsController < ApplicationController
 			#render plain: params
 			redirect_to car_hired_cars_path(@car)
 		else
-			session[:hire_car_data] = {car_id=> params[:car_id], hired_car_params=> hired_car_params}
+			session[:hire_car_data] = {"car_id"=> params[:car_id], "hired_car_params"=> hired_car_params}
 			flash[:alert] = "To Complete this transaction please login"
 			
 			redirect_to new_user_session_path
