@@ -7,6 +7,19 @@ class DashboardsController < ApplicationController
 		
 		@available_cars = []
 		hired = false
+		data = session[:hire_car_data]
+		
+		if user_signed_in? and data
+			if !HiredCar.find_by(car_id: data["car_id"])
+				@hired_car = @car.hired_cars.create(data["hired_car_params"])
+				HiredCar.update(@hired_car.id, user_id: @user.id)
+			end
+
+			#render plain: params
+			redirect_to car_hired_cars_path(@car)
+			
+			session[:hire_car_data] = nil
+		end
 		
 		Car.all.each do |car|
 			
@@ -27,7 +40,9 @@ class DashboardsController < ApplicationController
 		if @user 
 			@list_car_path = new_user_car_path(@user)
 		else
-			@list_car_path = new_user_session_path
+			@user = User.new
+			@user.id = 0
+			@list_car_path = new_user_car_path(@user)
 		end
 		
 	
@@ -39,7 +54,7 @@ class DashboardsController < ApplicationController
 		@available_cars = Car.all
 
 		if !params[:model].strip.empty?
-			@available_cars = @available_cars.where("model  like ?", '%'+params[:model]+'%')
+			@available_cars = @available_cars.where("model  ilike ?", '%'+params[:model]+'%')
 		end
 		
 		if !params[:price].strip.empty?
@@ -47,36 +62,29 @@ class DashboardsController < ApplicationController
 		end
 		
 		if !params[:location].strip.empty?
-			@available_cars = @available_cars.where("location  like ?", '%'+params[:location]+'%')
+			@available_cars = @available_cars.where("location  ilike ?", '%'+params[:location]+'%')
 		end
 		
-		render "dashboards/search_result"
-=begin		
-		if current_user.user_type == "1" # client
-			@available_cars = []
-			hired = false
+		cars = @available_cars
+		@available_cars = []
+		hired = false
+		
+		cars.each do |car|
 			
-			Car.all.each do |car|
-				
-				HiredCar.all.each do |hired_car|
-					if car.id == hired_car.car_id
-						hired = true
-						break
-					end
+			HiredCar.all.each do |hired_car|
+				if car.id == hired_car.car_id
+					hired = true
+					break
 				end
-				
-				
-				if !hired
-					@available_cars.push(car)
-				end
-				hired = false
 			end
 			
-			render 'dashboards/client_index'
 			
-		else #owner
-			render 'dashboards/owner_index'
-		end
-=end
+			if !hired
+				@available_cars.push(car)
+			end
+			hired = false
+		end	
+		
+		render "dashboards/search_result"
 	end
 end

@@ -48,7 +48,7 @@
 					<% if @user %>
 						<a class="navbar-brand" href=<%= edit_user_registration_path%> ><%= current_user.name %></a>
 					<% else %>
-						<a class="navbar-brand" href="#"><strong>RideKali</strong></a>
+						<a class="navbar-brand" href=<%= root_path %> ><strong>RideKali</strong></a>
 					<% end %>
                 </div>
                 <div class="collapse navbar-collapse">

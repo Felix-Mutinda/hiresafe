@@ -23,20 +23,22 @@
                         <p>Dashboard</p>
                     </a>
                 </li>
+				
+				<% if user_signed_in? %>
+					<li>
+						<a href= <%= new_user_car_path(@user) %> >
+							<i class="fa fa-plus"></i>
+							<p>Add a car</p>
+						</a>
+					</li>
 
-                <li>
-                    <a href= <%= new_user_car_path(@user) %> >
-                        <i class="fa fa-plus"></i>
-                        <p>Add a car</p>
-                    </a>
-                </li>
-
-                <li>
-                    <a href=<%= edit_user_registration_path %> >
-                        <i class="fa fa-user"></i>
-                        <p>Profile</p>
-                    </a>
-                </li>
+					<li>
+						<a href=<%= edit_user_registration_path %> >
+							<i class="fa fa-user"></i>
+							<p>Profile</p>
+						</a>
+					</li>
+			 <% end %>
 
             </ul>
     	</div>
@@ -52,7 +54,12 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href=<%= edit_user_registration_path%> ><%= current_user.name %></a>
+
+					<% if @user %>
+						<a class="navbar-brand" href=<%= edit_user_registration_path%> ><%= current_user.name %></a>
+					<% else %>
+						<a class="navbar-brand" href=<%= root_path %> ><strong>RideKali</strong></a>
+					<% end %>
                 </div>
                 <div class="collapse navbar-collapse">
              

@@ -1,8 +1,14 @@
 class CarsController < ApplicationController
-	
+	skip_before_action :authenticate_user!, only: [:new, ]
 	
 	def new
-		@user = User.find_by(id: params[:user_id])
+		if user_signed_in?
+			@user = User.find_by(id: params[:user_id])
+		else
+			flash[:alert] = "To list a car, please signin first"
+			redirect_to new_user_session_path
+		end
+		
 	end
 	
 	def create
