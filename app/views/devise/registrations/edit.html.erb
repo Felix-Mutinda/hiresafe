@@ -11,7 +11,11 @@
     	<div class="sidebar-wrapper">
             <div class="logo">
                 <a href="http://www.hiresafe.com" class="simple-text">
+                <% if user_signed_in? %>
+                    <%= image_tag url_for(@user.avatar), class: "car-logo img-circle" %>
+                <% else %>
                     <%= image_tag "nice-car.jpg", class: "car-logo" %>
+                <% end %>
                 </a>
             </div>
 
@@ -45,7 +49,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href=<%= edit_user_registration_path%> ><%= current_user.name %></a>
+                    <a class="navbar-brand" href=<%= edit_user_registration_path%> ><%= current_user.fname %></a>
                 </div>
                 <div class="collapse navbar-collapse">
              
@@ -75,13 +79,35 @@
 								  <%= devise_error_messages! %>
 								
 								  <div class="field form-group">
-									<%= f.label :username %><br />
-									<%= f.text_field :name, autofocus: true, class: "form-control" %>
+									<%= f.label :profile_picture %><br />
+									<%= f.file_field :avatar, autofocus: true, class: "file-input" %>
+								  </div>
+								
+								
+								  <div class="field form-group">
+									<%= f.label :firstname %><br />
+									<%= f.text_field :fname, autofocus: true, class: "form-control" %>
+								  </div>
+								  
+								  <div class="field form-group">
+									<%= f.label :middlename %><br />
+									<%= f.text_field :mname, autofocus: true, class: "form-control" %>
+								  </div>
+								  
+								  <div class="field form-group">
+									<%= f.label :lastname %><br />
+									<%= f.text_field :lname, autofocus: true, class: "form-control" %>
 								  </div>
 
 								  <div class="field form-group">
 									<%= f.label :national_id_number %><br />
 									<%= f.number_field :nat_id, class: "form-control", disabled: "disabled" %>
+								  </div>
+								  
+
+								  <div class="field form-group">
+									<%= f.label :driver_license_number %><br />
+									<%= f.number_field :dl_no, class: "form-control", disabled: "disabled" %>
 								  </div>
 								  
 								  <div class="field form-group">
@@ -93,24 +119,7 @@
 									<div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
 								  <% end %>
 
-								  <div class="field form-group">
-									<%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
-									<%= f.password_field :password, autocomplete: "new-password", class: "form-control" %>
-									<% if @minimum_password_length %>
-									  <br />
-									  <em><%= @minimum_password_length %> characters minimum</em>
-									<% end %>
-								  </div>
-
-								  <div class="field form-group">
-									<%= f.label :password_confirmation %><br />
-									<%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control" %>
-								  </div>
-
-								  <div class="field form-group">
-									<%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
-									<%= f.password_field :current_password, autocomplete: "current-password", class: "form-control" %>
-								  </div>
+		
 
 								  <div class="actions">
 									<%= f.submit "Update", class: "btn btn-info btn-fill pull-right" %>

@@ -3,8 +3,8 @@ Rails.application.routes.draw do
 	
 	get '/search', to: 'dashboards#search'
 	
-	devise_for :users
-	
+	devise_for :users, controllers: { registrations: 'users' }
+		
 	resources :users do
 		resources :cars 
 	end

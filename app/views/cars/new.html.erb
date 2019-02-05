@@ -56,7 +56,7 @@
                     </button>
 
 					<% if @user %>
-						<a class="navbar-brand" href=<%= edit_user_registration_path%> ><%= current_user.name %></a>
+						<a class="navbar-brand" href=<%= edit_user_registration_path%> ><%= current_user.fname %></a>
 					<% else %>
 						<a class="navbar-brand" href=<%= root_path %> ><strong>RideKali</strong></a>
 					<% end %>
@@ -87,21 +87,20 @@
 								<%= form_with(model: [ @user, @user.cars.build ], local: true) do |form| %>
 									<div class="row">
                                         <div class="col-md-12">
-                                            <div class="form-group">
-                                                
-                                                <%= form.label :model %><br>
-												<%= form.text_field :model, class: "form-control" %>
-                                            </div>
+											<div class="field form-group">
+												<%= form.label :model %><br />
+												<%= select_tag("car[model]", options_for_select([['Sedan', 1], ['Hatchback', 2], ['SUV', 3], ['Van', 4], ['Station Wagon', 5]], 1), class: "form-control") %>
+											 </div>
+
                                         </div>
                                     </div>
                                     
 									<div class="row">
                                         <div class="col-md-12">
-                                            <div class="form-group">
-                                                
-                                                <%= form.label :transmission %><br>
-												<%= form.text_field :transmission, class: "form-control" %>
-                                            </div>
+                                            <div class="field form-group">
+												<%= form.label :transmission %><br />
+												<%= select_tag("car[transmission]", options_for_select([['Automatic', 1], ['Manual', 2]], 1), class: "form-control") %>
+											</div>
                                         </div>
                                     </div>
                                     
@@ -115,6 +114,22 @@
                                         </div>
                                     </div>
                                     
+                                    
+									<div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                
+                                                <%= form.label :car_insurance_number %><br>
+												<%= form.text_field :insurance_no, class: "form-control" %>
+                                            </div>
+                                        </div>
+                                    </div>
+
+								  <div class="field form-group">
+									<%= form.label :car_image %><br />
+									<%= form.file_field :image, autofocus: true, class: "file-input" %>
+								  </div>
+								
                                     <%= form.submit "Add Car", class: "btn btn-info btn-fill pull-right" %>
                                     <div class="clearfix"></div>
 								<% end %>

@@ -53,7 +53,7 @@
                         <span class="icon-bar"></span>
                     </button>
                     <% if @user %>
-						<a class="navbar-brand" href=<%= edit_user_registration_path%> ><%= current_user.name %></a>
+						<a class="navbar-brand" href=<%= edit_user_registration_path%> ><%= current_user.fname %></a>
 					<% else %>
 						<a class="navbar-brand" href="#"><strong>RideKali</strong></a>
 					<% end %>
@@ -85,12 +85,33 @@
 									<% @available_cars.each do |car| %>
 										<div class="row">
 											<div class="col-md-4">
-												<i class="fa fa-car fa-5x" style="color:#434371;"></i>
+												<%= image_tag url_for(car.image), class: "car-logo img-rounded" %>
 											</div>
 
 											<div class="col-md-8">
-												<strong>Model: </strong><em> <%= car.model %></em><br>
-												<strong>Transmission: </strong><em> <%= car.transmission %></em><br>
+												<strong>Model: </strong><em> <%= 
+																				case car.model.to_i
+																					when 1
+																						"Sedan"
+																					when 2
+																						"Hatchback"
+																					when 3
+																						"SUV"
+																					when 4
+																						"Van"
+																					when 5
+																						"Station Wagon"
+																					else
+																						"Unspecified"
+																				end %></em><br>
+												<strong>Transmission: </strong><em> <%= case car.transmission.to_i
+																							when 1
+																								"Automatic"
+																							when 2
+																								"Manual"
+																							else
+																								"Unspecified"
+																						end  %></em><br>
 												<strong>Pick-Up Location: </strong><em> <%= car.location %></em><br>
 												<strong>Price: </strong><em> <%= car.price %> per day</em><br>
 											</div>

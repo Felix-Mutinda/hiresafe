@@ -16,13 +16,28 @@
 			  <%= devise_error_messages! %>
 
 			  <div class="field form-group">
-				<%= f.label :username %><br />
-				<%= f.text_field :name, autofocus: true, class: "form-control" %>
+				<%= f.label :firstname %><br />
+				<%= f.text_field :fname, autofocus: true, class: "form-control" %>
+			  </div>
+
+			  <div class="field form-group">
+				<%= f.label :middlename %><br />
+				<%= f.text_field :mname, autofocus: true, class: "form-control" %>
+			  </div>
+
+			  <div class="field form-group">
+				<%= f.label :sirname %><br />
+				<%= f.text_field :lname, autofocus: true, class: "form-control" %>
 			  </div>
 
 			  <div class="field form-group">
 				<%= f.label :national_id_number %><br />
 				<%= f.number_field :nat_id, class: "form-control" %>
+			  </div>
+
+			  <div class="field form-group">
+				<%= f.label :driver_license_number %><br />
+				<%= f.number_field :dl_no, class: "form-control" %>
 			  </div>
 
 			  <div class="field form-group">
