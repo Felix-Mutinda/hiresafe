@@ -85,7 +85,12 @@
 									<% @available_cars.each do |car| %>
 										<div class="row">
 											<div class="col-md-4">
+											<% if car.image.attached? %>
 												<%= image_tag url_for(car.image), class: "car-logo img-rounded" %>
+											<% else %>
+												<i class="fa fa-car"></i>
+											<% end %>
+											
 											</div>
 
 											<div class="col-md-8">

@@ -14,11 +14,12 @@ class DashboardsController < ApplicationController
 				@hired_car = @car.hired_cars.create(data["hired_car_params"])
 				HiredCar.update(@hired_car.id, user_id: @user.id)
 			end
-
+			
+			session[:hire_car_data] = nil
+			
 			#render plain: params
 			redirect_to car_hired_cars_path(@car)
 			
-			session[:hire_car_data] = nil
 		end
 		
 		Car.all.each do |car|
@@ -54,15 +55,11 @@ class DashboardsController < ApplicationController
 		@available_cars = Car.all
 
 		if !params[:model].strip.empty?
-			@available_cars = @available_cars.where("model  ilike ?", '%'+params[:model]+'%')
-		end
-		
-		if !params[:price].strip.empty?
-			@available_cars = @available_cars.where("price  <= ?", params[:price])
+			@available_cars = @available_cars.where("model  like ?", '%'+params[:model]+'%')
 		end
 		
 		if !params[:location].strip.empty?
-			@available_cars = @available_cars.where("location  ilike ?", '%'+params[:location]+'%')
+			@available_cars = @available_cars.where("location  like ?", '%'+params[:location]+'%')
 		end
 		
 		cars = @available_cars

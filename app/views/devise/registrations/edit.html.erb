@@ -11,7 +11,7 @@
     	<div class="sidebar-wrapper">
             <div class="logo">
                 <a href="http://www.hiresafe.com" class="simple-text">
-                <% if user_signed_in? %>
+                <% if user_signed_in? and @user.avatar.attached? %>
                     <%= image_tag url_for(@user.avatar), class: "car-logo img-circle" %>
                 <% else %>
                     <%= image_tag "nice-car.jpg", class: "car-logo" %>

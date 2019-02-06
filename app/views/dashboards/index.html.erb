@@ -95,25 +95,7 @@
 							
 							<div class="content">
 								<%= form_tag "/search", method: "get" do %>
-									<div class="row">
-                                        <div class="col-md-12">
-                                            <div class="form-group">
-                                                
-                                                <%= label_tag :model, "Model" %><br>
-												<%= text_field_tag :model, "", class: "form-control" %>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-									<div class="row">
-                                        <div class="col-md-12">
-                                            <div class="form-group">
-                                                
-                                                <%= label_tag :price, "Price" %><br>
-												<%= text_field_tag :price, "", class: "form-control" %>
-                                            </div>
-                                        </div>
-                                    </div>
+									
                                     
 									<div class="row">
                                         <div class="col-md-12">
@@ -125,6 +107,16 @@
                                         </div>
                                     </div>
                                     
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                
+                                                <%= label_tag :model, "Model" %><br>
+												<%= select_tag("model", options_for_select([['Sedan', 1], ['Hatchback', 2], ['SUV', 3], ['Van', 4], ['Station Wagon', 5]], 1), class: "form-control") %>
+                                            </div>
+                                        </div>
+                                    </div>
+                                   
                                     <%= submit_tag "Search", class: "btn btn-info btn-fill pull-right" %>
                                     <div class="clearfix"></div>
 								<% end %>
