@@ -12,7 +12,7 @@
     	<div class="sidebar-wrapper">
             <div class="logo">
                 <a href="#" class="simple-text">
-                    <%= image_tag "nice-car.jpg", class: "car-logo" %>
+                    <%= image_tag "aquarius.jpg", class: "car-logo1" %>
                 </a>
             </div>
 
@@ -75,7 +75,7 @@
        <div class="content">
             <div class="container-fluid">
                 <div class="row">
-					<div class="col-md-6">
+					<div class="col-md-8">
 						<div class="card">
 							<div class="header">
                                 <h4 class="title"><%= pluralize(@available_cars.count, "car") %> found</h4>
@@ -84,16 +84,25 @@
                                 <% if @available_cars.any? %>
 									<% @available_cars.each do |car| %>
 										<div class="row">
-											<div class="col-md-4">
-											<% if car.image.attached? %>
-												<%= image_tag url_for(car.image), class: "car-logo img-rounded" %>
+											<div class="col-md-6">
+											<% if car.image1.attached? %>
+												<%= image_tag url_for(car.image1), class: "car-logo img-rounded" %>
 											<% else %>
-												<i class="fa fa-car"></i>
+												<i class="fa fa-car fa-5x" style="color:#434371;"></i>
+											<% end %>
+											</div>
+											
+											<div class="col-md-6">
+											<% if car.image2.attached? %>
+												<%= image_tag url_for(car.image2), class: "car-logo img-rounded" %>
 											<% end %>
 											
 											</div>
+										</div>
+										
+										<div class="row">
 
-											<div class="col-md-8">
+											<div class="col-md-12">
 												<strong>Model: </strong><em> <%= 
 																				case car.model.to_i
 																					when 1
@@ -109,6 +118,7 @@
 																					else
 																						"Unspecified"
 																				end %></em><br>
+												<strong>Seats: </strong><em> <%= car.seats %></em><br>
 												<strong>Transmission: </strong><em> <%= case car.transmission.to_i
 																							when 1
 																								"Automatic"
@@ -127,14 +137,38 @@
 									<% end %>
 								<% else %>
 									<p class="text-warning">Unfortunately none are available for now, Try different search keywords.</p>
-									<i class="icon-sign-blank"></i>
-									<i class="fa fa-sign-blank"></i>
+									<%= form_tag "/search", method: "get" do %>
+									
+                                    
+									<div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                
+                                                <%= label_tag :location, "Pickup Location" %><br>
+												<%= text_field_tag :location, "", class: "form-control" %>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                
+                                                <%= label_tag :model, "Model" %><br>
+												<%= select_tag("model", options_for_select([['Sedan', 1], ['Hatchback', 2], ['SUV', 3], ['Van', 4], ['Station Wagon', 5]], 1), class: "form-control") %>
+                                            </div>
+                                        </div>
+                                    </div>
+                                   
+                                    <%= submit_tag "Search", class: "btn btn-info btn-fill pull-right" %>
+                                    <div class="clearfix"></div>
+								<% end %>
 								<% end %>
                             </div>
 						</div>
 					</div>
 					
-						<div class="col-md-6">
+						<div class="col-md-4">
 							<div class="card card-glance">
 								<div class="header">
 									<h4 class="title">At a glance</h4>

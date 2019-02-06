@@ -86,8 +86,30 @@
 											</div>
 
 											<div class="col-md-8">
-												<strong>Model: </strong><em> <%= car.model %></em><br>
-												<strong>Transmission: </strong><em> <%= car.transmission %></em><br>
+												<strong>Model: </strong><em> <%= 
+																				case car.model.to_i
+																					when 1
+																						"Sedan"
+																					when 2
+																						"Hatchback"
+																					when 3
+																						"SUV"
+																					when 4
+																						"Van"
+																					when 5
+																						"Station Wagon"
+																					else
+																						"Unspecified"
+																				end %></em><br>
+												<strong>Seats: </strong><em> <%= car.seats %></em><br>
+												<strong>Transmission: </strong><em> <%= case car.transmission.to_i
+																							when 1
+																								"Automatic"
+																							when 2
+																								"Manual"
+																							else
+																								"Unspecified"
+																						end  %></em><br>
 												<strong>Pick-Up Location: </strong><em> <%= car.location %></em><br>
 												<strong>Price: </strong><em> <%= car.price %> per day</em><br>
 											</div>

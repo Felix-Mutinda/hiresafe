@@ -12,7 +12,7 @@
     	<div class="sidebar-wrapper">
             <div class="logo">
                 <a href="http://www.hiresafe.com" class="simple-text">
-                    <%= image_tag "nice-car.jpg", class: "car-logo" %>
+                    <%= image_tag "nice-car.jpg", class: "car-logo1" %>
                 </a>
             </div>
 
@@ -76,10 +76,10 @@
                             <div class="content">
 								<div class="row">
 									<div class="col-md-4">
-											<% if @car.image.attached? %>
-												<%= image_tag url_for(@car.image), class: "car-logo img-rounded" %>
+											<% if @car.image1.attached? %>
+												<%= image_tag url_for(@car.image1), class: "car-logo img-rounded" %>
 											<% else %>
-												<i class="fa fa-car"></i>
+												<i class="fa fa-car fa-5x" style="color:#434371;"></i>
 											<% end %>
 											
 									</div>
@@ -99,7 +99,8 @@
 																			"Station Wagon"
 																		else
 																			"Unspecified"
-																	end %></em><br>									
+																	end %></em><br>	
+										<strong>Seats: </strong><em> <%= @car.seats %></em><br>								
 										<strong>Transmission: </strong><em> <%= case @car.transmission.to_i
 																					when 1
 																						"Automatic"

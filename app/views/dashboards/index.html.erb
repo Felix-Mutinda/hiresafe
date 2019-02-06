@@ -12,7 +12,7 @@
     	<div class="sidebar-wrapper">
             <div class="logo">
                 <a href="#" class="simple-text">
-                    <%= image_tag "nice-car.jpg", class: "car-logo" %>
+                    <%= image_tag "aquarius.jpg", class: "car-logo1 img-rounded" %>
                 </a>
             </div>
 
@@ -31,13 +31,28 @@
                     </a>
                 </li>
                 
+                <% if user_signed_in? %>
+                <li>
+                    <a href=<%= car_hired_cars_path(@car) %> >
+                        <i class="fa fa-key"></i>
+                        <p>Hired Cars</p>
+                    </a>
+                </li>
+
+                <li>
+                    <a href=<%= edit_user_registration_path%> >
+                        <i class="fa fa-user"></i>
+                        <p>Profile</p>
+                    </a>
+                </li>
+                
                 <li class="">
                     <a href= <%= destroy_user_session_path %> data-method="delete" >
                         <i class="fa fa-user"></i>
                         <p>Sign Out</p>
                     </a>
                 </li>
-
+				<% end %>
             </ul>
     	</div>
     </div>
@@ -159,48 +174,28 @@
 				
                 <div class="row">
 					
-					
 						<div class="col-md-12">
 							<div class="card card-glance">
 								<div class="header">
-									<h4 class="title">At a glance</h4>
+									<h4 class="title">Amazing Cars and Products</h4>
 								</div>
 								<div class="content">
 								   <div class="row">
 										<div class="col-md-4">
-											<i class="fa fa-users"></i>
-											<em><strong><%= User.all.count %></strong> Users</em>
+											<%= image_tag "jeep.jpg", class: "car-logo" %>
 										</div>
-										
 										<div class="col-md-4">
-											<i class="fa fa-car"></i>
-											<em><strong><%= Car.all.count %></strong> Cars</em>
+											<%= image_tag "sedan.png", class: "car-logo" %>
 										</div>
-										
 										<div class="col-md-4">
-											<i class="fa fa-road"></i>
-											<em><strong><%= HiredCar.all.count %></strong> Currently Hired Cars</em>
-										</div>
-										
-								   </div>
-								   <div class="footer">
-										<hr>
-										<div class="row">
-											<div class="col-md-6">
-												<em>We have a 5 star rating.</em>
-											</div>
-											<div class="col-md-6 gold-color">
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star"></i>
-											</div>
+											<%= image_tag "van.jpg", class: "car-logo" %>
 										</div>
 								   </div>
+								   
 								</div>
 							</div>
 						</div>
+						
 					</div>
                 </div>
             </div>
