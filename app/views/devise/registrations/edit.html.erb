@@ -12,9 +12,9 @@
             <div class="logo">
                 <a href="#" class="simple-text">
                 <% if user_signed_in? and @user.avatar.attached? %>
-                    <%= image_tag url_for(@user.avatar), class: "car-logo img-circle" %>
+                    <%= image_tag url_for(@user.avatar), class: "car-logo1 img-rounded" %>
                 <% else %>
-                    <%= image_tag "nice-car.jpg", class: "car-logo" %>
+                    <%= image_tag "nice-car.jpg", class: "car-logo1 img-rounded" %>
                 <% end %>
                 </a>
             </div>
