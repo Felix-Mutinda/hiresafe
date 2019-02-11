@@ -12,7 +12,7 @@
     	<div class="sidebar-wrapper">
             <div class="logo">
                 <a href="http://www.hiresafe.com" class="simple-text">
-                    <%= image_tag "nice-car.jpg", class: "car-logo" %>
+                    <%= image_tag "nice-car.jpg", class: "car-logo1" %>
                 </a>
             </div>
 
@@ -87,7 +87,7 @@
 
 											<div class="col-md-8">
 												<strong>Model: </strong><em> <%= 
-																				case car.model.to_i
+																				case car[0].model.to_i
 																					when 1
 																						"Sedan"
 																					when 2
@@ -101,8 +101,8 @@
 																					else
 																						"Unspecified"
 																				end %></em><br>
-												<strong>Seats: </strong><em> <%= car.seats %></em><br>
-												<strong>Transmission: </strong><em> <%= case car.transmission.to_i
+												<strong>Seats: </strong><em> <%= car[0].seats %></em><br>
+												<strong>Transmission: </strong><em> <%= case car[0].transmission.to_i
 																							when 1
 																								"Automatic"
 																							when 2
@@ -110,11 +110,11 @@
 																							else
 																								"Unspecified"
 																						end  %></em><br>
-												<strong>Pick-Up Location: </strong><em> <%= car.location %></em><br>
-												<strong>Price: </strong><em> <%= car.price %> per day</em><br>
+												<strong>Pick-Up Location: </strong><em> <%= car[0].location %></em><br>
+												<strong>Price: </strong><em> <%= car[0].price %> per day</em><br>
 											</div>
 										</div>
-										<%= link_to "Return", "#", method: :delete, class: "btn btn-danger btn-fill pull-right" %>
+										<%= link_to "Return", [car[0],car[1]], class: "btn btn-danger btn-fill pull-right" %>
 										<div class="clearfix"></div>
 										<hr>
 									<% end %>

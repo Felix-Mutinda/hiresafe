@@ -55,9 +55,9 @@ class DashboardsController < ApplicationController
 		@available_cars = Car.all
 		
 		# save dates to session
-		session[:start_date] = params[:start_date]
-		session[:end_date] = params[:end_date]
-		
+		session[:start_date] = Date.parse(params[:start_date])
+		session[:end_date] = Date.parse(params[:end_date])
+		session[:hire_days] = session[:end_date].day - session[:start_date].day
 
 		if !params[:model].strip.empty?
 			@available_cars = @available_cars.where("model  like ?", '%'+params[:model]+'%')

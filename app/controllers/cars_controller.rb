@@ -18,19 +18,14 @@ class CarsController < ApplicationController
 		case @car.model.to_i
 		when 1	# sedan
 			Car.update(@car.id, price: 2500)
-			Car.update(@car.id, seats: 5)
 		when 2	# hatchback
 			Car.update(@car.id, price: 2000)
-			Car.update(@car.id, seats: 4)
 		when 3	# SUV
 			Car.update(@car.id, price: 10000)
-			Car.update(@car.id, seats: 7)
 		when 4	# van
 			Car.update(@car.id, price: 7500)
-			Car.update(@car.id, seats: 5)
 		when 5	# station wagon
 			Car.update(@car.id, price: 2500)
-			Car.update(@car.id, seats: 9)
 		else
 			Car.update(@car.id, price: 00) # unspecified
 		end
@@ -41,6 +36,6 @@ class CarsController < ApplicationController
 	
 	private
     def car_params
-      params.require(:car).permit(:model, :transmission, :location, :insurance_no, :image1, :image2)
+      params.require(:car).permit(:model, :transmission, :location, :seats, :reg_no, :insurance_no, :image1, :image2)
     end
 end

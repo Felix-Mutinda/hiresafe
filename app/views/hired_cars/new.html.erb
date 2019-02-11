@@ -75,7 +75,7 @@
                             </div>
                             <div class="content">
 								<div class="row">
-									<div class="col-md-4">
+									<div class="col-md-6">
 											<% if @car.image1.attached? %>
 												<%= image_tag url_for(@car.image1), class: "car-logo img-rounded" %>
 											<% else %>
@@ -84,7 +84,7 @@
 											
 									</div>
 
-									<div class="col-md-8">
+									<div class="col-md-6">
 										<strong>Model: </strong><em> <%=
 																	case @car.model.to_i
 																		when 1
@@ -110,15 +110,18 @@
 																						"Unspecified"
 																				end  %></em><br>
 										<strong>Pick-Up Location: </strong><em> <%= @car.location %></em><br>
-										<strong>Price: </strong><em> <%= @car.price %> per day</em><br>
+										<strong>Price per day: </strong><em> Ksh <%= @car.price %></em><br>
+										<strong>Hire days: </strong><em><%= @h_days%></em><br>
+										<strong>Total Price: </strong><em> Ksh <%= @car.price * @h_days %></em><br>
 										
 										<%= form_with(model: [@car, @car.hired_cars.build ], local: true) do |form| %>
 											<div class="row">
 												<div class="col-md-12">
 													<div class="form-group">
 														
-														<strong class="text-info">Days to Hire:</strong>
-														<%= form.number_field :days, class: "form-control", required: "required", min: 1 %>
+														<strong class="text-info">Choose payment method</strong>
+														<%= form.hidden_field :days, class: "form-control", required: "required", min: 1 %>
+														<%= select_tag("days", options_for_select([['Mpesa', 'mpesa'], ['Credit card', 'card']], 1), class: "form-control") %>
 													</div>
 												</div>
 											</div>

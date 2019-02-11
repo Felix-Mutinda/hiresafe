@@ -117,7 +117,7 @@
                                             <div class="form-group">
                                                 
                                                 <%= label_tag :location, "Pickup Location" %><br>
-												<%= text_field_tag :location, "", class: "form-control" %>
+												<%= select_tag("location", options_for_select([['Nairobi', 'Nairobi'], ['Mombasa', 'Mombasa'], ['Nakuru', 'Nakuru'], ['Kisumu', 'Kisumu'], ['Eldoret', 'Eldoret']], 1), class: "form-control") %>
                                             </div>
                                         </div>
                                     </div>
@@ -128,7 +128,7 @@
                                             <div class="form-group">
                                                 
                                                 <%= label_tag :start_date, "Pickup Date" %><br>
-												<%= date_field_tag :start_date, "", class: "form-control" %>
+												<%= date_field_tag :start_date, "", class: "form-control", required: "required" %>
                                             </div>
                                         </div>
                                     </div>
@@ -139,7 +139,7 @@
                                             <div class="form-group">
                                                 
                                                 <%= label_tag :end_date, "Return Date" %><br>
-												<%= date_field_tag :end_date, "", class: "form-control" %>
+												<%= date_field_tag :end_date, "", class: "form-control", required: "required" %>
                                             </div>
                                         </div>
                                     </div>

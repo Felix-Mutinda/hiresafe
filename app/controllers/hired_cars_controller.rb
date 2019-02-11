@@ -9,15 +9,23 @@ class HiredCarsController < ApplicationController
 		Car.all.each do |car|
 			@my_hired_cars.all.each do |h_c|
 				if car.id == h_c.car_id
-					@car_details.push(car)
+					@car_details.push([car, h_c])
 					break
 				end
 			end
 		end
 	end
 	
+	# used as destroy
+	def show
+		HiredCar.destroy(params[:id])
+		
+		redirect_to  root_path
+	end
+	
 	def new
 		@car = Car.find_by(id: params[:car_id])
+		@h_days =  session[:hire_days]
 	end
 	
 	
