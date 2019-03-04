@@ -1,24 +1,11 @@
-# README
+# RideKali Services
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+A pragmatic peer to peer car hiring platform:
 
-Things you may want to cover:
+* Sign Up
 
-* Ruby version
+* List your car or Browse cars
 
-* System dependencies
+* Get approval, get going
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+As simple as that
