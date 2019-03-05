@@ -83,7 +83,7 @@
                                         <div class="col-md-12">
 											<div class="field form-group">
 												<%= form.label :model %><br />
-												<%= select_tag("car[model]", options_for_select([['Sedan', 1], ['Hatchback', 2], ['SUV', 3], ['Van', 4], ['Station Wagon', 5]]), class: "form-control") %>
+												<%= select_tag("car[model]", options_for_select([['Sedan', 1], ['Hatchback', 2], ['SUV', 3], ['Van', 4], ['Station Wagon', 5]], @car.model), class: "form-control") %>
 											 </div>
 
                                         </div>
@@ -93,7 +93,7 @@
                                         <div class="col-md-12">
 											<div class="field form-group">
 												<%= form.label :seats %><br />
-												<%= select_tag("car[seats]", options_for_select([['4', 4], ['5', 5], ['7', 7], ['10', 10], ['14', 14]]), class: "form-control") %>
+												<%= select_tag("car[seats]", options_for_select([['4', 4], ['5', 5], ['7', 7], ['10', 10], ['14', 14]], @car.seats), class: "form-control") %>
 											 </div>
 
                                         </div>
@@ -103,7 +103,7 @@
                                         <div class="col-md-12">
                                             <div class="field form-group">
 												<%= form.label :transmission %><br />
-												<%= select_tag("car[transmission]", options_for_select([['Automatic', 1], ['Manual', 2]]), class: "form-control") %>
+												<%= select_tag("car[transmission]", options_for_select([['Automatic', 1], ['Manual', 2]], @car.transmission), class: "form-control") %>
 											</div>
                                         </div>
                                     </div>
@@ -113,7 +113,7 @@
                                         <div class="col-md-12">
                                             <div class="field form-group">
 												<%= form.label :pickup_location %><br />
-												<%= select_tag("car[location]", options_for_select([['Nairobi', 'Nairobi'], ['Mombasa', 'Mombasa'], ['Nakuru', 'Nakuru'], ['Kisumu', 'Kisumu'], ['Eldoret', 'Eldoret']]), class: "form-control") %>
+												<%= select_tag("car[location]", options_for_select([['Nairobi', 'Nairobi'], ['Mombasa', 'Mombasa'], ['Nakuru', 'Nakuru'], ['Kisumu', 'Kisumu'], ['Eldoret', 'Eldoret']], @car.location), class: "form-control") %>
 											</div>
                                         </div>
                                     </div>
