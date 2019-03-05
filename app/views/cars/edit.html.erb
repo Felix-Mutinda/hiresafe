@@ -1,0 +1,219 @@
+
+<div class="wrapper">
+    <div class="sidebar" data-color="blue" data-image='sidebar-5.jpg' >
+
+    <!--
+
+        Tip 1: you can change the color of the sidebar using: data-color="blue | azure | green | orange | red | purple"
+        Tip 2: you can also add an image using data-image tag
+
+    -->
+
+    	<div class="sidebar-wrapper">
+            <div class="logo">
+                <a href="http://www.hiresafe.com" class="simple-text">
+                    <%= image_tag "aquarius.jpg", class: "car-logo1" %>
+                </a>
+            </div>
+
+            <ul class="nav">
+                <li class="active">
+                    <a href= <%= root_path %> >
+                        <i class="fa fa-car"></i>
+                        <p>Dashboard</p>
+                    </a>
+                </li>
+				
+				<% if user_signed_in? %>
+
+					<li>
+						<a href=<%= edit_user_registration_path %> >
+							<i class="fa fa-user"></i>
+							<p>Profile</p>
+						</a>
+					</li>
+			 <% end %>
+
+            </ul>
+    	</div>
+    </div>
+
+    <div class="main-panel">
+        <nav class="navbar navbar-default navbar-fixed">
+            <div class="container-fluid">
+                <div class="navbar-header hiresafe-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+
+					<% if @user %>
+						<a class="navbar-brand" href=<%= edit_user_registration_path%> ><%= current_user.fname %></a>
+					<% else %>
+						<a class="navbar-brand" href=<%= root_path %> ><strong>RideKali</strong></a>
+					<% end %>
+                </div>
+                <div class="collapse navbar-collapse">
+             
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                           <a href=<%= destroy_user_session_path %> data-method="delete" >
+                               Sign Out
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+
+       <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+					<div class="col-md-6">
+						<div class="card">
+							<div class="header">
+                                <h4 class="title">New Car</h4>
+                            </div>
+                            <div class="content">
+								<%= form_with(model: [ @user, @user.cars.build ], local: true) do |form| %>
+									<div class="row">
+                                        <div class="col-md-12">
+											<div class="field form-group">
+												<%= form.label :model %><br />
+												<%= select_tag("car[model]", options_for_select([['Sedan', 1], ['Hatchback', 2], ['SUV', 3], ['Van', 4], ['Station Wagon', 5]], 1), class: "form-control") %>
+											 </div>
+
+                                        </div>
+                                    </div>
+                                                                       
+									<div class="row">
+                                        <div class="col-md-12">
+											<div class="field form-group">
+												<%= form.label :seats %><br />
+												<%= select_tag("car[seats]", options_for_select([['4', 4], ['5', 5], ['7', 7], ['10', 10], ['14', 14]], 1), class: "form-control") %>
+											 </div>
+
+                                        </div>
+                                    </div>
+                                                                       
+									<div class="row">
+                                        <div class="col-md-12">
+                                            <div class="field form-group">
+												<%= form.label :transmission %><br />
+												<%= select_tag("car[transmission]", options_for_select([['Automatic', 1], ['Manual', 2]], 1), class: "form-control") %>
+											</div>
+                                        </div>
+                                    </div>
+                                    
+                                                                       
+									<div class="row">
+                                        <div class="col-md-12">
+                                            <div class="field form-group">
+												<%= form.label :pickup_location %><br />
+												<%= select_tag("car[location]", options_for_select([['Nairobi', 'Nairobi'], ['Mombasa', 'Mombasa'], ['Nakuru', 'Nakuru'], ['Kisumu', 'Kisumu'], ['Eldoret', 'Eldoret']], 1), class: "form-control") %>
+											</div>
+                                        </div>
+                                    </div>
+                                                                        
+                                    
+									<div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                
+                                                <%= form.label :car_registration_number %><br>
+												<%= form.text_field :reg_no, class: "form-control" %>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+									<div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                
+                                                <%= form.label :car_insurance_number %><br>
+												<%= form.text_field :insurance_no, class: "form-control" %>
+                                            </div>
+                                        </div>
+                                    </div>
+
+								  <div class="field form-group">
+									<%= form.label :car_image %><br />
+									<%= form.file_field :image1, autofocus: true, class: "file-input" %><br>
+									<%= form.file_field :image2, autofocus: true, class: "file-input" %>
+								  </div>
+
+                                    <%= form.submit "Add Car", class: "btn btn-info btn-fill pull-right" %>
+                                    <div class="clearfix"></div>
+								<% end %>
+								
+								
+                            
+                            </div>
+						</div>
+					</div>
+					
+						<div class="col-md-6">
+							<div class="card card-glance">
+								<div class="header">
+									<h4 class="title">At a glance</h4>
+								</div>
+								<div class="content">
+								   <div class="row">
+										<div class="col-md-4">
+											<i class="fa fa-users"></i>
+											<em><strong><%= User.all.count %></strong> Users</em>
+										</div>
+										
+										<div class="col-md-4">
+											<i class="fa fa-car"></i>
+											<em><strong><%= Car.all.count %></strong> Cars</em>
+										</div>
+										
+										<div class="col-md-4">
+											<i class="fa fa-road"></i>
+											<em><strong><%= HiredCar.all.count %></strong> Currently Hired Cars</em>
+										</div>
+								   </div>
+								   <div class="footer">
+										<hr>
+										<div class="row">
+											<div class="col-md-6">
+												<em>We have a 5 star rating.</em>
+											</div>
+											<div class="col-md-6 gold-color">
+												<i class="fa fa-star"></i>
+												<i class="fa fa-star"></i>
+												<i class="fa fa-star"></i>
+												<i class="fa fa-star"></i>
+												<i class="fa fa-star"></i>
+											</div>
+										</div>
+								   </div>
+								</div>
+							</div>
+						</div>
+					</div>
+                </div>
+            </div>
+
+
+
+
+        <footer class="footer">
+            <div class="container-fluid">
+                <div class="pull-left">
+                    <strong>Contact Us:</strong> <br>
+						<i class="fa fa-phone-square"></i> +2547000000001 <br>
+						<i class="fa fa-inbox"></i>  hiresafe@gmail.com <br>
+                </div>
+                <p class="copyright pull-right">
+                    &copy; 2019 <a href="http://www.hiresafe.com">Hire Safe</a>, Just hire, no worries
+                </p>
+            </div>
+        </footer>
+
+    </div>
+</div>

@@ -1,0 +1,208 @@
+
+<div class="wrapper">
+    <div class="sidebar" data-color="blue" data-image='sidebar-5.jpg' >
+
+    <!--
+
+        Tip 1: you can change the color of the sidebar using: data-color="blue | azure | green | orange | red | purple"
+        Tip 2: you can also add an image using data-image tag
+
+    -->
+
+    	<div class="sidebar-wrapper">
+            <div class="logo">
+                <a href="#" class="simple-text">
+                    <%= image_tag "aquarius.jpg", class: "car-logo1" %>
+                </a>
+            </div>
+
+            <ul class="nav">
+                <li class="active">
+                    <a href= <%= root_path %> >
+                        <i class="fa fa-car"></i>
+                        <p>Dashboard</p>
+                    </a>
+                </li>
+
+                <li>
+                    <a href=<%= edit_user_registration_path%> >
+                        <i class="fa fa-user"></i>
+                        <p>Profile</p>
+                    </a>
+                </li>
+
+            </ul>
+    	</div>
+    </div>
+
+    <div class="main-panel">
+        <nav class="navbar navbar-default navbar-fixed">
+            <div class="container-fluid">
+                <div class="navbar-header hiresafe-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <% if @user %>
+						<a class="navbar-brand" href=<%= edit_user_registration_path%> ><%= current_user.fname %></a>
+					<% else %>
+						<a class="navbar-brand" href="#"><strong>RideKali</strong></a>
+					<% end %>
+                </div>
+                <div class="collapse navbar-collapse">
+             
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                           <a href=<%= destroy_user_session_path %> data-method="delete" >
+                               Sign Out
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+
+       <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+					<div class="col-md-8">
+						<div class="card">
+							<div class="header">
+                                <h4 class="title">Your Listed Cars</h4>
+                            </div>
+                            <div class="content">
+                                <% if @cars.any? %>
+									<% @cars.each do |car| %>
+										<div class="row">
+											<div class="col-md-6">
+											<% if car.image1.attached? %>
+												<%= image_tag url_for(car.image1), class: "car-logo img-rounded" %>
+											<% else %>
+												<i class="fa fa-car fa-5x" style="color:#434371;"></i>
+											<% end %>
+											</div>
+											
+											<div class="col-md-6">
+											<% if car.image2.attached? %>
+												<%= image_tag url_for(car.image2), class: "car-logo img-rounded" %>
+											<% end %>
+											
+											</div>
+										</div>
+										
+										<div class="row">
+
+											<div class="col-md-12">
+												<strong>Model: </strong><em> <%= 
+																				case car.model.to_i
+																					when 1
+																						"Sedan"
+																					when 2
+																						"Hatchback"
+																					when 3
+																						"SUV"
+																					when 4
+																						"Van"
+																					when 5
+																						"Station Wagon"
+																					else
+																						"Unspecified"
+																				end %></em><br>
+												<strong>Seats: </strong><em> <%= car.seats %></em><br>
+												<strong>Transmission: </strong><em> <%= case car.transmission.to_i
+																							when 1
+																								"Automatic"
+																							when 2
+																								"Manual"
+																							else
+																								"Unspecified"
+																						end  %></em><br>
+												<strong>Pick-Up Location: </strong><em> <%= car.location %></em><br>
+												<strong>Price: </strong><em> <%= car.price %> per day</em><br>
+											</div>
+										</div>
+										<a href=<%= edit_user_car_path(@user, car) %> class="btn btn-primary btn-fill pull-right">Edit</a>
+										<div class="clearfix"></div>
+										<hr>
+									<% end %>
+								<% else %>
+								    <div class="row">
+								        <div class="col-md-6">
+								            <div class="card">
+								                <div class="header">
+								                    <h3 class="title">You Haven't Listed Cars Yet</h3>
+								                </div>
+								            </div>
+								        </div>
+								    </div>
+								<% end %>
+                            </div>
+						</div>
+					</div>
+					
+						<div class="col-md-4">
+							<div class="card card-glance">
+								<div class="header">
+									<h4 class="title">At a glance</h4>
+								</div>
+								<div class="content">
+								   <div class="row">
+										<div class="col-md-4">
+											<i class="fa fa-users"></i>
+											<em><strong><%= User.all.count %></strong> Users</em>
+										</div>
+										
+										<div class="col-md-4">
+											<i class="fa fa-car"></i>
+											<em><strong><%= Car.all.count %></strong> Cars</em>
+										</div>
+										
+										<div class="col-md-4">
+											<i class="fa fa-road"></i>
+											<em><strong><%= HiredCar.all.count %></strong> Currently Hired Cars</em>
+										</div>
+										
+								   </div>
+								   <div class="footer">
+										<hr>
+										<div class="row">
+											<div class="col-md-6">
+												<em>We have a 5 star rating.</em>
+											</div>
+											<div class="col-md-6 gold-color">
+												<i class="fa fa-star"></i>
+												<i class="fa fa-star"></i>
+												<i class="fa fa-star"></i>
+												<i class="fa fa-star"></i>
+												<i class="fa fa-star"></i>
+											</div>
+										</div>
+								   </div>
+								</div>
+							</div>
+						</div>
+					</div>
+                </div>
+            </div>
+
+
+
+
+        <footer class="footer">
+            <div class="container-fluid">
+                <div class="pull-left">
+                    <strong>Contact Us:</strong> <br>
+						<i class="fa fa-phone-square"></i> +2547000000001 <br>
+						<i class="fa fa-inbox"></i>  hiresafe@gmail.com <br>
+                </div>
+                <p class="copyright pull-right">
+                    &copy; 2019 <a href="#">Hire Safe</a>, Just hire, no worries
+                </p>
+            </div>
+        </footer>
+
+    </div>
+</div>

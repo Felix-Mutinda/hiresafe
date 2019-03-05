@@ -1,6 +1,16 @@
 class CarsController < ApplicationController
 	skip_before_action :authenticate_user!, only: [:new, ]
 	
+	def index
+	    @user = current_user
+		@cars = @user.cars
+	end
+	
+	def edit
+	    @user = current_user
+		@car = Car.find_by(id: params[:car_id])
+	end
+	
 	def new
 		if user_signed_in?
 			@user = User.find_by(id: params[:user_id])
@@ -32,6 +42,13 @@ class CarsController < ApplicationController
 		
 		flash[:notice] = "Your Car Has Successfully Been Listed"
 		redirect_to root_path
+	end
+	
+	def update
+	    @user = current_user
+	    @car = @user.cars.update(car_params)
+	    
+	    redirect_to 'index'
 	end
 	
 	private

@@ -33,6 +33,13 @@
                 
                 <% if user_signed_in? %>
                 <li>
+                    <a href=<%= user_cars_path(@car) %> >
+                        <i class="fa fa-key"></i>
+                        <p>My Cars</p>
+                    </a>
+                </li>
+
+                <li>
                     <a href=<%= car_hired_cars_path(@car) %> >
                         <i class="fa fa-key"></i>
                         <p>Hired Cars</p>
