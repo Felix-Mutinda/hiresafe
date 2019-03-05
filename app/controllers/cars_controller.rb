@@ -8,7 +8,7 @@ class CarsController < ApplicationController
 	
 	def edit
 	    @user = current_user
-		@car = Car.find_by(id: params[:car_id])
+		@car = Car.find_by(id: params[:id])
 	end
 	
 	def new
@@ -46,9 +46,10 @@ class CarsController < ApplicationController
 	
 	def update
 	    @user = current_user
-	    @car = @user.cars.update(car_params)
+	    @car = Car.find_by(id: params[:id])
+	    @car.update(car_params)
 	    
-	    redirect_to 'index'
+	    redirect_to user_cars_path(@user)
 	end
 	
 	private

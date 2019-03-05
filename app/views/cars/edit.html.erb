@@ -75,15 +75,15 @@
 					<div class="col-md-6">
 						<div class="card">
 							<div class="header">
-                                <h4 class="title">New Car</h4>
+                                <h4 class="title">Edit Car</h4>
                             </div>
                             <div class="content">
-								<%= form_with(model: [ @user, @user.cars.build ], local: true) do |form| %>
+								<%= form_for @car, local: true do |form| %>
 									<div class="row">
                                         <div class="col-md-12">
 											<div class="field form-group">
 												<%= form.label :model %><br />
-												<%= select_tag("car[model]", options_for_select([['Sedan', 1], ['Hatchback', 2], ['SUV', 3], ['Van', 4], ['Station Wagon', 5]], 1), class: "form-control") %>
+												<%= select_tag("car[model]", options_for_select([['Sedan', 1], ['Hatchback', 2], ['SUV', 3], ['Van', 4], ['Station Wagon', 5]]), class: "form-control") %>
 											 </div>
 
                                         </div>
@@ -93,7 +93,7 @@
                                         <div class="col-md-12">
 											<div class="field form-group">
 												<%= form.label :seats %><br />
-												<%= select_tag("car[seats]", options_for_select([['4', 4], ['5', 5], ['7', 7], ['10', 10], ['14', 14]], 1), class: "form-control") %>
+												<%= select_tag("car[seats]", options_for_select([['4', 4], ['5', 5], ['7', 7], ['10', 10], ['14', 14]]), class: "form-control") %>
 											 </div>
 
                                         </div>
@@ -103,7 +103,7 @@
                                         <div class="col-md-12">
                                             <div class="field form-group">
 												<%= form.label :transmission %><br />
-												<%= select_tag("car[transmission]", options_for_select([['Automatic', 1], ['Manual', 2]], 1), class: "form-control") %>
+												<%= select_tag("car[transmission]", options_for_select([['Automatic', 1], ['Manual', 2]]), class: "form-control") %>
 											</div>
                                         </div>
                                     </div>
@@ -113,7 +113,7 @@
                                         <div class="col-md-12">
                                             <div class="field form-group">
 												<%= form.label :pickup_location %><br />
-												<%= select_tag("car[location]", options_for_select([['Nairobi', 'Nairobi'], ['Mombasa', 'Mombasa'], ['Nakuru', 'Nakuru'], ['Kisumu', 'Kisumu'], ['Eldoret', 'Eldoret']], 1), class: "form-control") %>
+												<%= select_tag("car[location]", options_for_select([['Nairobi', 'Nairobi'], ['Mombasa', 'Mombasa'], ['Nakuru', 'Nakuru'], ['Kisumu', 'Kisumu'], ['Eldoret', 'Eldoret']]), class: "form-control") %>
 											</div>
                                         </div>
                                     </div>
@@ -145,7 +145,7 @@
 									<%= form.file_field :image2, autofocus: true, class: "file-input" %>
 								  </div>
 
-                                    <%= form.submit "Add Car", class: "btn btn-info btn-fill pull-right" %>
+                                    <%= form.submit "Update", class: "btn btn-info btn-fill pull-right" %>
                                     <div class="clearfix"></div>
 								<% end %>
 								
