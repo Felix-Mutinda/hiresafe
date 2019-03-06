@@ -114,9 +114,10 @@
 												<strong>Car Registration Number: </strong><em> <%= car[0].reg_no %></em><br>
 												<strong>Pick-Up Location: </strong><em> <%= car[0].location %></em><br>
 												<strong>Price: </strong><em> <%= car[0].price %> per day</em><br>
+												<strong>Payment: </strong><em class="text-danger"> <%= car[1].payment %></em><br>
 											</div>
 										</div>
-										<%= link_to "Return", [car[0],car[1]], class: "btn btn-danger btn-fill pull-right" %>
+										<%= link_to "Return Car", [car[0],car[1]], class: "btn btn-danger btn-fill pull-right" %>
 										<div class="clearfix"></div>
 										<hr>
 									<% end %>

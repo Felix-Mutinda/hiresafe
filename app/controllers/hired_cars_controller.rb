@@ -36,6 +36,7 @@ class HiredCarsController < ApplicationController
 		if user_signed_in?
 			if !HiredCar.find_by(car_id: params[:car_id])
 				@hired_car = @car.hired_cars.create(hired_car_params)
+				HiredCar.update(@hired_car.id, payment: 'pending') # payment defaults to 'pending'
 				HiredCar.update(@hired_car.id, user_id: @user.id)
 			end
 
