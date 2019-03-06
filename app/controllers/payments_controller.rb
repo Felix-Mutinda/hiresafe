@@ -55,7 +55,7 @@ private
         request.body = "{\"ShortCode\":\"#{SHORTCODE}\",
             \"ResponseType\":\"#{RESPONSE_TYPE}\",
             \"ConfirmationURL\":\"#{CONFIRMATION_URL}\",
-            \"ValidationURL\":\"#{VALIDATION_URL}"}"
+            \"ValidationURL\":\"#{VALIDATION_URL}\"}"
         
         response = http.request(request)
         # puts response.read_body
