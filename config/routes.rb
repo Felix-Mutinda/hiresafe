@@ -3,7 +3,8 @@ Rails.application.routes.draw do
 	
 	get '/search', to: 'dashboards#search'
 	get '/payments/show_token', to: 'payments#show_token'
-	
+	get '/payments/register', to: 'payments#register'
+
 	devise_for :users, controllers: { registrations: 'users' }
 		
 	resources :users do

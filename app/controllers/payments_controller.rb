@@ -22,6 +22,20 @@ class PaymentsController < ApplicationController
         render plain: access_token
     end
     
+    def register
+        render plain: register_url
+    end
+    
+    # validation and confirmation URLs, publicly available
+    def confirm
+        render plain: params
+    end
+    
+    def validate
+        render plain: params
+    end
+    
+    
 private
     def access_token
         uri = URI('https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials')
@@ -51,7 +65,7 @@ private
         request = Net::HTTP::Get.new(uri)
         request["accept"] = 'application/json'
         request["content-type"] = 'application/json'
-        request["authorization"] = 'Bearer #{access_token}' # token added
+        request["authorization"] = "Bearer #{access_token}" # token added
         request.body = "{\"ShortCode\":\"#{SHORTCODE}\",
             \"ResponseType\":\"#{RESPONSE_TYPE}\",
             \"ConfirmationURL\":\"#{CONFIRMATION_URL}\",
@@ -59,6 +73,8 @@ private
         
         response = http.request(request)
         # puts response.read_body
+        
+        response.body
     end
             
 end
