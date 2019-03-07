@@ -24,10 +24,7 @@ class PaymentsController < ApplicationController
         CONFIRMATION_URL = 'http://hiresafe.herokuapp.com/payments/confirm'
         VALIDATION_URL = 'http://hiresafe.herokuapp.com/payments/validate'
         
-        # lipa na mpesa password generation
-        TIMESTAMP = DateTime.now.strftime("%Y%m%d%H%M%S")
-        PASSKEY = 'bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919'
-        PASSWORD = Base64.encode64(LNM_SHORTCODE + PASSKEY + TIMESTAMP)
+        
         
     # dev only
     def show_token
@@ -36,6 +33,7 @@ class PaymentsController < ApplicationController
     
     def register
         render plain: register_url
+        
     end
     
     def c2bsimulate
@@ -64,7 +62,7 @@ class PaymentsController < ApplicationController
 private
     def access_token
         uri = URI('https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials')
-        response = nil
+        res = nil
         
         Net::HTTP.start(uri.host, uri.port,
           :use_ssl => uri.scheme == 'https',
@@ -73,39 +71,40 @@ private
           request = Net::HTTP::Get.new uri.request_uri
           request.basic_auth CONSUMER_KEY, CONSUMER_SECRET
         
-          response = http.request request # Net::HTTPResponse object
+          res = http.request request # Net::HTTPResponse object
         end
         
-        if response.code == '200'
-            response_json = JSON.parse(response.body)
+        if res.code == '200'
+            response_json = JSON.parse(res.body)
             response_json['access_token']
         else
-            response.body
-            response.code
+            res.body
+            res.code
         end
     end
     
     def register_url
         uri = URI('https://sandbox.safaricom.co.ke/mpesa/c2b/v1/registerurl')
+        res = nil
         
-        http = Net::HTTP.new(uri.host, uri.port)
-        http.use_ssl = true
-        http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+        Net::HTTP.start(uri.host, uri.port,
+            :use_ssl => uri.scheme == 'https',
+            :verify_mode => OpenSSL::SSL::VERIFY_NONE) do |http|
+            
+            request = Net::HTTP::Get.new(uri.request_uri)
+            request["accept"] = 'application/json'
+            request["content-type"] = 'application/json'
+            request["authorization"] = "Bearer #{access_token}" # token added
+            request.body = "{\"ShortCode\":\"#{SHORTCODE}\",
+                \"ResponseType\":\"#{RESPONSE_TYPE}\",
+                \"ConfirmationURL\":\"#{CONFIRMATION_URL}\",
+                \"ValidationURL\":\"#{VALIDATION_URL}\"}"
+            
+            res = http.request(request)
+        end
         
-        request = Net::HTTP::Get.new(uri)
-        request["accept"] = 'application/json'
-        request["content-type"] = 'application/json'
-        request["authorization"] = "Bearer #{access_token}" # token added
-        request.body = "{\"ShortCode\":\"#{SHORTCODE}\",
-            \"ResponseType\":\"#{RESPONSE_TYPE}\",
-            \"ConfirmationURL\":\"#{CONFIRMATION_URL}\",
-            \"ValidationURL\":\"#{VALIDATION_URL}\"}"
-        
-        response = http.request(request)
-        # puts response.read_body
-        
-        response.body
-        response.code
+        res.body
+        res.code
     end
     
     def c2b_simulate
@@ -135,6 +134,11 @@ private
     def stk_push
         uri = URI('https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest')
         
+        # lipa na mpesa password generation
+        timestamp = DateTime.now.strftime("%Y%m%d%H%M%S")
+        passkey = 'bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919'
+        password = Base64.encode64(LNM_SHORTCODE + passkey + timestamp)
+        
         http = Net::HTTP.new(uri.host, uri.port)
         http.use_ssl = true
         http.verify_mode = OpenSSL::SSL::VERIFY_NONE
@@ -145,8 +149,8 @@ private
         request["authorization"] = "Bearer #{access_token}"
         
         request.body = "{\"BusinessShortCode\": \"#{LNM_SHORTCODE}\",
-          \"Password\": \"#{PASSWORD}\",
-          \"Timestamp\": \"#{TIMESTAMP}\",
+          \"Password\": \"#{password}\",
+          \"Timestamp\": \"#{timestamp}\",
           \"TransactionType\": \"CustomerPayBillOnline\",
           \"Amount\": \"#{SIMULATE_AMOUNT}\",
           \"PartyA\": \"#{PARTYA}\",
