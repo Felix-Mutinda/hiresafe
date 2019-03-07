@@ -1,0 +1,31 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  TransactionType: MyString
+  TransID: MyString
+  TransTime: MyString
+  TransAmount: MyString
+  BusinessShortCode: MyString
+  BillRefNumber: MyString
+  InvoiceNumber: MyString
+  OrgAccountBalance: MyString
+  ThirdPartyTransID: MyString
+  MSISDN: MyString
+  FirstName: MyString
+  MiddleName: MyString
+  LastName: MyString
+
+two:
+  TransactionType: MyString
+  TransID: MyString
+  TransTime: MyString
+  TransAmount: MyString
+  BusinessShortCode: MyString
+  BillRefNumber: MyString
+  InvoiceNumber: MyString
+  OrgAccountBalance: MyString
+  ThirdPartyTransID: MyString
+  MSISDN: MyString
+  FirstName: MyString
+  MiddleName: MyString
+  LastName: MyString
