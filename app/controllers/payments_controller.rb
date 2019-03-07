@@ -5,6 +5,9 @@ class PaymentsController < ApplicationController
     require 'json'
     require 'base64'
     
+    # oops
+    skip_before_action :verify_authenticity_token
+    
     # important constants
     CONSUMER_KEY = 'Qc2tfjP3fDZE7XXveM2SkxIbyy8XoH2f'
     CONSUMER_SECRET = 'Sg8WZUtVgbXAPnUn'
