@@ -54,7 +54,7 @@ class PaymentsController < ApplicationController
     def confirm
         
         # log params to file
-        logfile = '../../log/payments/confirmations'
+        logfile = './log/payments/confirmations' # debug
         File.open(logfile, 'a') do |f|
             f.puts(confirmation_params)
         end
@@ -76,7 +76,7 @@ class PaymentsController < ApplicationController
     def validate
         
         # log params to file
-        logfile = '../../log/payments/validations'
+        logfile = './log/payments/validations'
         File.open(logfile, 'a') do |f|
             f.puts(validation_params)
         end
