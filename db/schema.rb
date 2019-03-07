@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_06_074628) do
+ActiveRecord::Schema.define(version: 2019_03_07_095431) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -45,6 +45,24 @@ ActiveRecord::Schema.define(version: 2019_03_06_074628) do
     t.integer "seats"
     t.string "reg_no"
     t.index ["user_id"], name: "index_cars_on_user_id"
+  end
+
+  create_table "confirmations", force: :cascade do |t|
+    t.string "TransactionType"
+    t.string "TransID"
+    t.string "TransTime"
+    t.string "TransAmount"
+    t.string "BusinessShortCode"
+    t.string "BillRefNumber"
+    t.string "InvoiceNumber"
+    t.string "OrgAccountBalance"
+    t.string "ThirdPartyTransID"
+    t.string "MSISDN"
+    t.string "FirstName"
+    t.string "MiddleName"
+    t.string "LastName"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "hired_cars", force: :cascade do |t|
