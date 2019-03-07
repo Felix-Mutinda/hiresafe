@@ -137,7 +137,7 @@ private
         # lipa na mpesa password generation
         timestamp = DateTime.now.strftime("%Y%m%d%H%M%S")
         passkey = 'bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919'
-        password = Base64.encode64(LNM_SHORTCODE + passkey + timestamp)
+        password = Base64.encode64(LNM_SHORTCODE + passkey + timestamp).split("\n").join
         
         http = Net::HTTP.new(uri.host, uri.port)
         http.use_ssl = true
@@ -164,6 +164,30 @@ private
         
         response.read_body
         response.code
+    end
+    
+    # white list params
+    
+    def confirmation_params
+        params.permit(
+            :TransactionType,
+            :TransID,
+            :TransTime,
+            :TransAmount,
+            :BusinessShortCode,
+            :BillRefNumber,
+            :InvoiceNumber,
+            :OrgAccountBalance,
+            :ThirdPartyTransID,
+            :MSISDN,
+            :FirstName,
+            :MiddleName,
+            :LastName
+        )
+    end
+    
+    def validation_params
+        confirmation_params
     end
            
 end
