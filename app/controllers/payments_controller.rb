@@ -46,11 +46,49 @@ class PaymentsController < ApplicationController
     
     # validation and confirmation URLs, publicly available
     def confirm
-        render plain: params
+        
+        # log params to file
+        logfile = '../../log/payments/confirmations'
+        File.open(logfile, 'a') do |f|
+            f.puts(confirmation_params)
+        end
+        
+        # write to db
+        conf = Confirmation.new confirmation_params
+        
+        if conf.save
+            render json: '{
+                "C2BPaymentConfirmationResult": "Success"
+            }'
+        else
+            render json: '{
+                "C2BPaymentConfirmationResult": "Failure"
+            }'
+        end
     end
     
     def validate
-        render plain: params
+        
+        # log params to file
+        logfile = '../../log/payments/validations'
+        File.open(logfile, 'a') do |f|
+            f.puts(validation_params)
+        end
+        
+        # write to db
+        conf = Confirmation.new validation_params
+        
+        if conf.save # validate the request here
+            render json: '{
+                "ResultCode": 0,
+                "ResultDesc": "Accepted"
+            }'
+        else
+            render json: '{
+                "ResultCode": 1,
+                "ResultDesc": "Rejected"
+            }'
+        end
     end
     
     # lipa na mpesa callback
