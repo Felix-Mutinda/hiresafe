@@ -53,11 +53,8 @@ class PaymentsController < ApplicationController
     # validation and confirmation URLs, publicly available
     def confirm
         
-        # log params to file
-        logfile = './log/payments/confirmations' # debug
-        File.open(logfile, 'a') do |f|
-            f.puts(confirmation_params)
-        end
+        # log params 
+        logger.info confirmation_params
         
         # write to db
         conf = Confirmation.new confirmation_params
@@ -75,11 +72,8 @@ class PaymentsController < ApplicationController
     
     def validate
         
-        # log params to file
-        logfile = './log/payments/validations'
-        File.open(logfile, 'a') do |f|
-            f.puts(validation_params)
-        end
+        # log params 
+        logger.info confirmation_params
         
         # write to db
         conf = Confirmation.new validation_params
