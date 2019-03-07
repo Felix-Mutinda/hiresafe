@@ -8,6 +8,9 @@ class PaymentsController < ApplicationController
     # oops
     skip_before_action :verify_authenticity_token
     
+    # allow callbacks without login
+    skip_before_action :authenticate_user!, only: [:confirm, :validate, :lnm_callback]
+    
     # important constants
     CONSUMER_KEY = 'Qc2tfjP3fDZE7XXveM2SkxIbyy8XoH2f'
     CONSUMER_SECRET = 'Sg8WZUtVgbXAPnUn'
