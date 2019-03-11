@@ -4,7 +4,7 @@ class PaymentsController < ApplicationController
     require 'uri'
     require 'json'
     require 'base64'
-    
+
     # oops
     skip_before_action :verify_authenticity_token
     
@@ -12,6 +12,7 @@ class PaymentsController < ApplicationController
     skip_before_action :authenticate_user!, only: [:confirm, :validate, :lnm_callback]
     
     # important constants
+    BASE_URL = 'https://sandbox.safaricom.co.ke'
     CONSUMER_KEY = 'Qc2tfjP3fDZE7XXveM2SkxIbyy8XoH2f'
     CONSUMER_SECRET = 'Sg8WZUtVgbXAPnUn'
     SHORTCODE = '601521'
@@ -93,115 +94,107 @@ class PaymentsController < ApplicationController
     
     # lipa na mpesa callback
     def lnm_callback
-        render plain: params
+        
+        # log params 
+        logger.info lnm_callback_params
+        
     end
     
     
 private
+
+    def encode_credentials key, secret
+        credentials = "#{key}:#{secret}"
+        encoded_credentials = Base64.encode64(credentials).split("\n").join
+    end
+    
+
     def access_token
-        uri = URI('https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials')
-        res = nil
+        url = 'https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials'
         
-        Net::HTTP.start(uri.host, uri.port,
-          :use_ssl => uri.scheme == 'https',
-          :verify_mode => OpenSSL::SSL::VERIFY_NONE)    do |http|
+        encode = encode_credentials CONSUMER_KEY, CONSUMER_SECRET
+        headers = {
+          "Authorization" => "Basic #{encode}"
+        }
         
-          request = Net::HTTP::Get.new uri.request_uri
-          request.basic_auth CONSUMER_KEY, CONSUMER_SECRET
+        response = HTTParty.get(url, headers: headers)
         
-          res = http.request request # Net::HTTPResponse object
-        end
-        
-        if res.code == '200'
-            response_json = JSON.parse(res.body)
+        if response.code == 200
+            response_json = JSON.parse(response.body)
             response_json['access_token']
         else
-            res.body
-            res.code
+            response.body
         end
     end
     
     def register_url
-        uri = URI('https://sandbox.safaricom.co.ke/mpesa/c2b/v1/registerurl')
-        res = nil
+        url = 'https://sandbox.safaricom.co.ke/mpesa/c2b/v1/registerurl'
         
-        Net::HTTP.start(uri.host, uri.port,
-            :use_ssl => uri.scheme == 'https',
-            :verify_mode => OpenSSL::SSL::VERIFY_NONE) do |http|
-            
-            request = Net::HTTP::Get.new(uri.request_uri)
-            request["accept"] = 'application/json'
-            request["content-type"] = 'application/json'
-            request["authorization"] = "Bearer #{access_token}" # token added
-            request.body = "{\"ShortCode\":\"#{SHORTCODE}\",
-                \"ResponseType\":\"#{RESPONSE_TYPE}\",
-                \"ConfirmationURL\":\"#{CONFIRMATION_URL}\",
-                \"ValidationURL\":\"#{VALIDATION_URL}\"}"
-            
-            res = http.request(request)
-        end
-        
-        res.body
-        res.code
+        headers = {
+            "Authorization" => "Bearer #{access_token}",
+            "Content-Type" => "application/json"
+        }
+        body = {
+            ShortCode: "#{SHORTCODE}",
+            ResponseType: "#{RESPONSE_TYPE}",
+            ConfirmationURL: "#{CONFIRMATION_URL}",
+            ValidationURL: "#{VALIDATION_URL}"
+        }.to_json
+
+        response = HTTParty.post(url, headers: headers, body: body)
+        JSON.parse(response.body)
     end
     
     def c2b_simulate
-        uri = URI('https://sandbox.safaricom.co.ke/mpesa/c2b/v1/simulate')
+        url = "#{BASE_URL}/mpesa/c2b/v1/simulate"
         
-        http = Net::HTTP.new(uri.host, uri.port)
-        http.use_ssl = true
-        http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+        headers = {
+            "Authorization" => "Bearer #{access_token}",
+            "Content-Type" => "application/json"
+        }
         
-        request = Net::HTTP::Get.new(uri)
-        request["accept"] = 'application/json'
-        request["content-type"] = 'application/json'
-        request["authorization"] = "Bearer #{access_token}"
-        request.body = "{ \"ShortCode\":\"#{SHORTCODE}\",
-          \"CommandID\":\"CustomerPayBillOnline\",
-          \"Amount\":\"#{SIMULATE_AMOUNT}\",
-          \"Msisdn\":\"#{MSISDN}\",
-          \"BillRefNumber\":\"#{BILLREFNUMBER}\" }"
+        body = {
+            ShortCode: "#{SHORTCODE}",
+            CommandID: "CustomerPayBillOnline",
+            Amount: "#{SIMULATE_AMOUNT}",
+            Msisdn: "#{MSISDN}",
+            BillRefNumber: "#{BILLREFNUMBER}"
+        }.to_json
         
-        response = http.request(request)
-        #puts response.read_body
-        
-        response.body
-        response.code
+        response = HTTParty.post(url, headers: headers, body: body)
+        JSON.parse(response.body)
     end
     
     def stk_push
-        uri = URI('https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest')
+        url = 'https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest'
         
         # lipa na mpesa password generation
         timestamp = DateTime.now.strftime("%Y%m%d%H%M%S")
         passkey = 'bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919'
         password = Base64.encode64(LNM_SHORTCODE + passkey + timestamp).split("\n").join
         
-        http = Net::HTTP.new(uri.host, uri.port)
-        http.use_ssl = true
-        http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+        headers = {
+          "Authorization" => "Bearer #{access_token}",
+          "Content-Type" => "application/json"
+        }
+  
+        body = {
+          BusinessShortCode: "#{LNM_SHORTCODE}",
+          Password: "#{password}",
+          Timestamp: "#{timestamp}",
+          TransactionType: "CustomerPayBillOnline",
+          Amount: "#{SIMULATE_AMOUNT}",
+          PartyA: "#{PARTYA}",
+          PartyB: "#{LNM_SHORTCODE}",
+          PhoneNumber: "#{PARTYA}",
+          CallBackURL: "#{LNM_CALLBACK}",
+          AccountReference: "#{ACCOUNTREFERENCE}",
+          TransactionDesc: "#{TRANSACTIONDESC}"
+        }.to_json
         
-        request = Net::HTTP::Get.new(uri)
-        request["accept"] = 'application/json'
-        request["content-type"] = 'application/json'
-        request["authorization"] = "Bearer #{access_token}"
+        response = HTTParty.post(url, headers: headers, body: body)
+        JSON.parse(response.body)
         
-        request.body = "{\"BusinessShortCode\": \"#{LNM_SHORTCODE}\",
-          \"Password\": \"#{password}\",
-          \"Timestamp\": \"#{timestamp}\",
-          \"TransactionType\": \"CustomerPayBillOnline\",
-          \"Amount\": \"#{SIMULATE_AMOUNT}\",
-          \"PartyA\": \"#{PARTYA}\",
-          \"PartyB\": \"#{LNM_SHORTCODE}\",
-          \"PhoneNumber\": \"#{PARTYA}\",
-          \"CallBackURL\": \"#{LNM_CALLBACK}\",
-          \"AccountReference\": \"#{ACCOUNTREFERENCE}\",
-          \"TransactionDesc\": \"#{TRANSACTIONDESC}\"}"
-        
-        response = http.request(request)
-        
-        response.read_body
-        response.code
     end
     
     # white list params
@@ -226,6 +219,10 @@ private
     
     def validation_params
         confirmation_params
+    end
+    
+    def lnm_callback_params
+        params.require(:Body).permit(:stkCallback)
     end
            
 end
