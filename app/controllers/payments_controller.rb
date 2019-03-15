@@ -28,8 +28,8 @@ class PaymentsController < ApplicationController
     
         # register url
         RESPONSE_TYPE = "Cancelled"
-        CONFIRMATION_URL = 'http://hiresafe.herokuapp.com/payments/confirm'
-        VALIDATION_URL = 'http://hiresafe.herokuapp.com/payments/validate'
+        CONFIRMATION_URL = 'https://hiresafe.herokuapp.com/payments/confirm'
+        VALIDATION_URL = 'https://hiresafe.herokuapp.com/payments/validate'
         
         
         
