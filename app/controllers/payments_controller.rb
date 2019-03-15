@@ -22,7 +22,7 @@ class PaymentsController < ApplicationController
     SIMULATE_AMOUNT = '10'
     BILLREFNUMBER = 'hiresafe'
     PARTYA = '254798904053'
-    LNM_CALLBACK = 'http://hiresafe.herokuapp.com/payments/lnm_callback'
+    LNM_CALLBACK = 'https://hiresafe.herokuapp.com/payments/lnm_callback'
     TRANSACTIONDESC = 'Car Hire Payment'
     ACCOUNTREFERENCE = 'hiresafe'
     
