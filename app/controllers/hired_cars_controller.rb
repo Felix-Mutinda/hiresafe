@@ -35,13 +35,27 @@ class HiredCarsController < ApplicationController
 		
 		if user_signed_in?
 			if !HiredCar.find_by(car_id: params[:car_id])
-				@hired_car = @car.hired_cars.create(hired_car_params)
-				HiredCar.update(@hired_car.id, payment: 'pending') # payment defaults to 'pending'
-				HiredCar.update(@hired_car.id, user_id: @user.id)
-				
-				# add pickup and return dates to hired_cars table
-				HiredCar.update(@hired_car.id, start_date: session[:start_date])
-				HiredCar.update(@hired_car.id, end_date: session[:end_date])
+			    
+			    # pay for a car before hiring another
+			    pending = false
+			    HiredCar.all.each do |car|
+			        if car.user_id == @user.id and car.payment == "pending"
+			            flash[:alert] = "Please complete a pending payment first"
+			            #redirect_to car_hired_cars_path(car)
+			            pending = true
+			            break
+			        end
+			    end
+			    
+			    if !pending
+    				@hired_car = @car.hired_cars.create(hired_car_params)
+    				HiredCar.update(@hired_car.id, payment: 'pending') # payment defaults to 'pending'
+    				HiredCar.update(@hired_car.id, user_id: @user.id)
+    				
+    				# add pickup and return dates to hired_cars table
+    				HiredCar.update(@hired_car.id, start_date: session[:start_date])
+    				HiredCar.update(@hired_car.id, end_date: session[:end_date])
+    			end
 			end
 
 			#render plain: params
