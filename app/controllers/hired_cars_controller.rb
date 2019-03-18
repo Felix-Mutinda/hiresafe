@@ -38,6 +38,10 @@ class HiredCarsController < ApplicationController
 				@hired_car = @car.hired_cars.create(hired_car_params)
 				HiredCar.update(@hired_car.id, payment: 'pending') # payment defaults to 'pending'
 				HiredCar.update(@hired_car.id, user_id: @user.id)
+				
+				# add pickup and return dates to hired_cars table
+				HiredCar.update(@hired_car.id, start_date: session[:start_date])
+				HiredCar.update(@hired_car.id, end_date: session[:end_date])
 			end
 
 			#render plain: params

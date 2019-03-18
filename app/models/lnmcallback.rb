@@ -1,0 +1,2 @@
+class Lnmcallback < ApplicationRecord
+end

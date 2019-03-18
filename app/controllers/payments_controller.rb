@@ -19,10 +19,10 @@ class PaymentsController < ApplicationController
     INITIATIOR_NAME = 'apitest361'
     MSISDN	= '254708374149'
     LNM_SHORTCODE = '174379'
-    SIMULATE_AMOUNT = '10'
+    SIMULATE_AMOUNT = '1'
     BILLREFNUMBER = 'hiresafe'
     PARTYA = '254798904053'
-    LNM_CALLBACK = 'https://hiresafe.herokuapp.com/payments/lnm_callback'
+    LNM_CALLBACK = 'https://felix-mutinda-1.paiza-user.cloud:3000/payments/lnm_callback'
     TRANSACTIONDESC = 'Car Hire Payment'
     ACCOUNTREFERENCE = 'hiresafe'
     
@@ -98,6 +98,10 @@ class PaymentsController < ApplicationController
         # log params 
         logger.info lnm_callback_params
         
+        # write to db
+        callback = Lnmcallback.new lnm_callback_params
+        
+        callback.save
     end
     
     
@@ -222,7 +226,28 @@ private
     end
     
     def lnm_callback_params
-        params.require(:Body).permit(:stkCallback)
+        # params.require(:Body).permit(:stkCallback)
+        
+        params_hash = {}
+        
+        response = params[:Body][:stkCallback]
+        params_hash[:MerchantRequestID] = response[:MerchantRequestID]
+        params_hash[:CheckoutRequestID] = response[:CheckoutRequestID]
+        params_hash[:ResultCode] = response[:ResultCode]
+        params_hash[:ResultDesc] = response[:ResultDesc]
+        
+        # successful request
+        if (params_hash[:ResultCode]).to_i == 0
+            metadata = response[:CallbackMetadata][:Item]
+            
+            params_hash[:Amount] = metadata[0][:Value]
+            params_hash[:MpesaReceiptNumber] = metadata[1][:Value]
+            params_hash[:Balance] = metadata[2][:Value]
+            params_hash[:TransactionDate] = metadata[3][:Value]
+            params_hash[:PhoneNumber] = metadata[4][:Value]
+        end
+        
+        return params_hash
     end
            
 end

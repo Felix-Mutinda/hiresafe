@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_07_095604) do
+ActiveRecord::Schema.define(version: 2019_03_18_070545) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -77,6 +77,20 @@ ActiveRecord::Schema.define(version: 2019_03_07_095604) do
     t.string "payment"
     t.index ["car_id"], name: "index_hired_cars_on_car_id"
     t.index ["user_id"], name: "index_hired_cars_on_user_id"
+  end
+
+  create_table "lnmcallbacks", force: :cascade do |t|
+    t.string "MerchantRequestID"
+    t.string "CheckoutRequestID"
+    t.string "ResultCode"
+    t.string "ResultDesc"
+    t.string "Amount"
+    t.string "MpesaReceiptNumber"
+    t.string "Balance"
+    t.string "TransactionDate"
+    t.string "PhoneNumber"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|

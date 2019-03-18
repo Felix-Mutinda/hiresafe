@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  MerchantRequestID: MyString
+  CheckoutRequestID: MyString
+  ResultCode: MyString
+  ResultDesc: MyString
+  Amount: MyString
+  MpesaReceiptNumber: MyString
+  Balance: MyString
+  TransactionDate: MyString
+  PhoneNumber: MyString
+
+two:
+  MerchantRequestID: MyString
+  CheckoutRequestID: MyString
+  ResultCode: MyString
+  ResultDesc: MyString
+  Amount: MyString
+  MpesaReceiptNumber: MyString
+  Balance: MyString
+  TransactionDate: MyString
+  PhoneNumber: MyString

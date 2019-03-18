@@ -12,7 +12,12 @@ class DashboardsController < ApplicationController
 		if user_signed_in? and data
 			if !HiredCar.find_by(car_id: data["car_id"])
 				@hired_car = @car.hired_cars.create(data["hired_car_params"])
+				HiredCar.update(@hired_car.id, payment: 'pending') # payment defaults to 'pending'
 				HiredCar.update(@hired_car.id, user_id: @user.id)
+				
+				# add pickup and return dates to hired_cars table
+				HiredCar.update(@hired_car.id, start_date: session[:start_date])
+				HiredCar.update(@hired_car.id, end_date: session[:end_date])
 			end
 			
 			session[:hire_car_data] = nil
@@ -60,7 +65,7 @@ class DashboardsController < ApplicationController
 		session[:hire_days] = session[:end_date].day - session[:start_date].day
 
 		if !params[:model].strip.empty?
-			@available_cars = @available_cars.where("model  ilike ?", '%'+params[:model]+'%')
+			@available_cars = @available_cars.where("model  like ?", '%'+params[:model]+'%')
 		end
 		
 		if !params[:location].strip.empty?
