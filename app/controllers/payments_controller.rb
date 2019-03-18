@@ -28,8 +28,8 @@ class PaymentsController < ApplicationController
     
         # register url
         RESPONSE_TYPE = "Cancelled"
-        CONFIRMATION_URL = 'https://hiresafe.herokuapp.com/payments/confirm'
-        VALIDATION_URL = 'https://hiresafe.herokuapp.com/payments/validate'
+        CONFIRMATION_URL = 'https://felix-mutinda-1.paiza-user.cloud:3000/payments/confirm'
+        VALIDATION_URL = 'https://felix-mutinda-1.paiza-user.cloud:3000/payments/validate'
         
         
         
@@ -61,9 +61,20 @@ class PaymentsController < ApplicationController
         conf = Confirmation.new confirmation_params
         
         if conf.save
+            
+            # update corresponding pending hired_car
+            HiredCar.all.each do |hired_car|
+                user =  User.find_by(id: hired_car.user_id)
+                if user.mobile == (confirmation_params[:MSISDN]).to_i
+                    HiredCar.update(hired_car.id, payment: "Verified")
+                    HiredCar.update(hired_car.id, MpesaReceiptNumber: confirmation_params[:TransID])
+                end
+            end
+            
             render json: '{
                 "C2BPaymentConfirmationResult": "Success"
             }'
+            
         else
             render json: '{
                 "C2BPaymentConfirmationResult": "Failure"
@@ -102,6 +113,17 @@ class PaymentsController < ApplicationController
         callback = Lnmcallback.new lnm_callback_params
         
         callback.save
+        
+        # if payment is successful update corresponding pending hired_car
+        if (lnm_callback_params[:ResultCode]).to_i == 0
+            HiredCar.all.each do |hired_car|
+                user =  User.find_by(id: hired_car.user_id)
+                if user.mobile == (lnm_callback_params[:PhoneNumber]).to_i
+                    HiredCar.update(hired_car.id, payment: "Verified")
+                    HiredCar.update(hired_car.id, MpesaReceiptNumber: lnm_callback_params[:MpesaReceiptNumber])
+                end
+            end
+        end
     end
     
     
