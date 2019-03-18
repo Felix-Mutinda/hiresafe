@@ -1,3 +1,17 @@
 // Place all the styles related to the hired_cars controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.lnm-logo {
+    width: 100%;
+    height: auto;
+}
+
+.lnm {
+    margin: 2px, auto;
+    
+    #lnm-initiate {
+        display: block;
+        margin: 2px auto !important;
+    }
+}

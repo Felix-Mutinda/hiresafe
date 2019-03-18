@@ -114,12 +114,38 @@
 												<strong>Car Registration Number: </strong><em> <%= car[0].reg_no %></em><br>
 												<strong>Pick-Up Location: </strong><em> <%= car[0].location %></em><br>
 												<strong>Price: </strong><em> <%= car[0].price %> per day</em><br>
+												<% if car[1].payment == "pending" %>
 												<strong>Payment: </strong><em class="text-danger"> <%= car[1].payment %></em><br>
+												<% else %>
+												<strong>Payment: </strong><em class="text-success"> <%= car[1].payment %></em><br>
+												<% end %>
 											</div>
 										</div>
 										<%= link_to "Return Car", [car[0],car[1]], class: "btn btn-danger btn-fill pull-right" %>
 										<div class="clearfix"></div>
 										<hr>
+										<div class="lnm">
+										    <%= image_tag "lnm-logo.png", class: "lnm-logo" %>
+										    <button class="btn  btn-fill btn-success" id="lnm-initiate">Click to pay 
+										        <%=
+										          (car[1].end_date.day - car[1].start_date.day) * car[0].price
+										        %>  
+										    </button>
+										    
+										    <fieldset>
+										        <legend>Alternatively</legend>
+										        <ul class="list-group">
+										            <li class="list-group-item">Go to M-PESA Menu</li>
+										            <li class="list-group-item">Select Lipa na M-PESA</li>
+										            <li class="list-group-item">Select Pay Bill</li>
+										            <li class="list-group-item">Enter 123456 as the Business Number</li>
+										            <li class="list-group-item">Enter PAWA as ACCOUNT NUMBER</li>
+										            <li class="list-group-item">Enter amount </li>
+										            <li class="list-group-item">Enter your M-PESA PIN and send</li>
+										            <li class="list-group-item">You will receive an SMS confirming the transaction </li>
+										        </ul>
+										    </fieldset>
+										</div>
 									<% end %>
 								<% else %>
 									You Haven't Hired a Car Yet!
