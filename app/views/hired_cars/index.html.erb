@@ -72,7 +72,7 @@
        <div class="content">
             <div class="container-fluid">
                 <div class="row">
-					<div class="col-md-6">
+					<div class="col-md-10">
 						<div class="card">
 							<div class="header">
                                 <h4 class="title">Your Currently Hired Cars</h4>
@@ -81,45 +81,104 @@
                                 <% if @car_details.any? %>
 									<% @car_details.each do |car| %>
 										<div class="row">
-											<div class="col-md-4">
-												<i class="fa fa-car fa-5x" style="color:#434371;"></i>
+											<div class="col-md-6">
+    											<% if car[0].image1.attached? %>
+    												<%= image_tag url_for(car[0].image1), class: "car-logo img-rounded" %>
+    											<% else %>
+    												<i class="fa fa-car fa-5x" style="color:#434371;"></i>
+    											<% end %>
+											</div>
+											
+											<div class="col-md-6">
+    											<% if car[0].image2.attached? %>
+    												<%= image_tag url_for(car[0].image2), class: "car-logo img-rounded" %>
+    											<% end %>
+											
 											</div>
 
-											<div class="col-md-8">
-												<strong>Model: </strong><em> <%= 
-																				case car[0].model.to_i
-																					when 1
-																						"Sedan"
-																					when 2
-																						"Hatchback"
-																					when 3
-																						"SUV"
-																					when 4
-																						"Van"
-																					when 5
-																						"Station Wagon"
-																					else
-																						"Unspecified"
-																				end %></em><br>
-												<strong>Seats: </strong><em> <%= car[0].seats %></em><br>
-												<strong>Transmission: </strong><em> <%= case car[0].transmission.to_i
-																							when 1
-																								"Automatic"
-																							when 2
-																								"Manual"
-																							else
-																								"Unspecified"
-																						end  %></em><br>
-												<strong>Car Insurance Number: </strong><em> <%= car[0].insurance_no %></em><br>
-												<strong>Car Registration Number: </strong><em> <%= car[0].reg_no %></em><br>
-												<strong>Pick-Up Location: </strong><em> <%= car[0].location %></em><br>
-												<strong>Price: </strong><em> <%= car[0].price %> per day</em><br>
-												<% if car[1].payment == "pending" %>
-												<strong>Payment: </strong><em class="text-danger"> <%= car[1].payment %></em><br>
-												<% else %>
-												<strong>Payment: </strong><em class="text-success"> <%= car[1].payment %></em><br>
-												<strong>Mpesa Receipt: </strong><em class="text-success"> <%= car[1].MpesaReceiptNumber %></em><br>
-												<% end %>
+											<div class="col-md-12">
+											    <table class="table">
+											        <tr>
+											            <td><strong>Model: </strong></td>
+											            <td>
+											                <em> <%= 
+    																				case car[0].model.to_i
+    																					when 1
+    																						"Sedan"
+    																					when 2
+    																						"Hatchback"
+    																					when 3
+    																						"SUV"
+    																					when 4
+    																						"Van"
+    																					when 5
+    																						"Station Wagon"
+    																					else
+    																						"Unspecified"
+    																				end %></em>
+											            </td>
+											        </tr>
+    												
+    												<tr>
+    												    <td><strong>Seats: </strong></td>
+    												    <td><em> <%= car[0].seats %></em></td>
+    												</tr>
+    												
+    												<tr>
+    												    <td><strong>Transmission: </strong></td>
+    												    <td>
+    												        <em> <%= case car[0].transmission.to_i
+    																							when 1
+    																								"Automatic"
+    																							when 2
+    																								"Manual"
+    																							else
+    																								"Unspecified"
+    																						end  %></em>
+    												    </td>
+    												</tr>
+    												
+    												<tr>
+    												    <td><strong>Car Insurance Number: </strong></td>
+    												    <td><em> <%= car[0].insurance_no %></em></td>
+    												</tr>
+    												
+    												<tr>
+    												    <td><strong>Car Registration Number: </strong></td>
+    												    <td><em> <%= car[0].reg_no %></em></td>
+    												</tr>
+    												
+    												<tr>
+    												    <td><strong>Pick-Up Location: </strong></td>
+    												    <td><em> <%= car[0].location %></em></td>
+    												</tr>
+    												
+    												<tr>
+    												    <td><strong>Price: </strong></td>
+    												    <td><em> <%= car[0].price %> per day</em></td>
+    												</tr>
+
+    												<tr>
+    												    <td><strong>Total days: </strong></td>
+    												    <td><em> <%= (car[1].end_date.day - car[1].start_date.day) %> days</em></td>
+    												</tr>
+    												
+    												<% if car[1].payment == "pending" %>
+    												<tr>
+    												    <td><strong>Payment: </strong></td>
+    												    <td><em class="text-danger"> <%= car[1].payment %></em></td>
+    												</tr>
+    												<% else %>
+    												<tr>
+    												    <td><strong>Payment: </strong></td>
+    												    <td><em class="text-success"> <%= car[1].payment %></em></td>
+    												</tr>
+    												<tr>
+    												    <td><strong>Mpesa Receipt: </strong></td>
+    												    <td><em class="text-success"> <%= car[1].MpesaReceiptNumber %></em><br></td>
+    												</tr>
+    												<% end %>
+    											</table>
 											</div>
 										</div>
 										<%= link_to "Return Car", [car[0],car[1]], class: "btn btn-danger btn-fill pull-right" %>
@@ -165,47 +224,7 @@
 						</div>
 					</div>
 					
-						<div class="col-md-6">
-							<div class="card card-glance">
-								<div class="header">
-									<h4 class="title">At a glance</h4>
-								</div>
-								<div class="content">
-								   <div class="row">
-										<div class="col-md-4">
-											<i class="fa fa-users"></i>
-											<em><strong><%= User.all.count %></strong> Users</em>
-										</div>
-										
-										<div class="col-md-4">
-											<i class="fa fa-car"></i>
-											<em><strong><%= Car.all.count %></strong> Cars</em>
-										</div>
-										
-										<div class="col-md-4">
-											<i class="fa fa-road"></i>
-											<em><strong><%= HiredCar.all.count %></strong> Currently Hired Cars</em>
-										</div>
-										
-								   </div>
-								   <div class="footer">
-										<hr>
-										<div class="row">
-											<div class="col-md-6">
-												<em>We have a 5 star rating.</em>
-											</div>
-											<div class="col-md-6 gold-color">
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star"></i>
-											</div>
-										</div>
-								   </div>
-								</div>
-							</div>
-						</div>
+						
 					</div>
                 </div>
             </div>

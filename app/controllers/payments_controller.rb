@@ -11,6 +11,8 @@ class PaymentsController < ApplicationController
     # allow callbacks without login
     skip_before_action :authenticate_user!, only: [:confirm, :validate, :lnm_callback]
     
+    
+    
     # important constants
     BASE_URL = 'https://sandbox.safaricom.co.ke'
     CONSUMER_KEY = 'Qc2tfjP3fDZE7XXveM2SkxIbyy8XoH2f'
@@ -21,7 +23,7 @@ class PaymentsController < ApplicationController
     LNM_SHORTCODE = '174379'
     SIMULATE_AMOUNT = '1'
     BILLREFNUMBER = 'hiresafe'
-    PARTYA = '254798904053'
+    # PARTYA = '254798904053'
     LNM_CALLBACK = 'https://hiresafe.herokuapp.com/payments/lnm_callback'
     TRANSACTIONDESC = 'Car Hire Payment'
     ACCOUNTREFERENCE = 'hiresafe'
@@ -193,6 +195,7 @@ private
     
     def stk_push
         url = 'https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest'
+        @partyA = current_user.mobile.to_s
         
         # lipa na mpesa password generation
         timestamp = DateTime.now.strftime("%Y%m%d%H%M%S")
@@ -203,16 +206,16 @@ private
           "Authorization" => "Bearer #{access_token}",
           "Content-Type" => "application/json"
         }
-  
+ 
         body = {
           BusinessShortCode: "#{LNM_SHORTCODE}",
           Password: "#{password}",
           Timestamp: "#{timestamp}",
           TransactionType: "CustomerPayBillOnline",
           Amount: "#{SIMULATE_AMOUNT}",
-          PartyA: "#{PARTYA}",
+          PartyA: "#{@partyA}",
           PartyB: "#{LNM_SHORTCODE}",
-          PhoneNumber: "#{PARTYA}",
+          PhoneNumber: "#{@partyA}",
           CallBackURL: "#{LNM_CALLBACK}",
           AccountReference: "#{ACCOUNTREFERENCE}",
           TransactionDesc: "#{TRANSACTIONDESC}"
