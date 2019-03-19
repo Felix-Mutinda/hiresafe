@@ -110,6 +110,14 @@
 									<%= f.number_field :dl_no, class: "form-control", disabled: "disabled" %>
 								  </div>
 								  
+                    								  
+                    			  <div class="field form-group">
+                    			    <em>use strictly: 2547...</em><br>
+                    				<%= f.label :mobile_number %><br />
+                    				<%= f.number_field :mobile, class: "form-control", placeholder: "2547..." %>
+                    			  </div>
+                    
+                    			  
 								  <div class="field form-group">
 									<%= f.label :email %><br />
 									<%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control" %>
