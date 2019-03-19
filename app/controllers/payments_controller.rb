@@ -21,15 +21,15 @@ class PaymentsController < ApplicationController
     LNM_SHORTCODE = '174379'
     SIMULATE_AMOUNT = '1'
     BILLREFNUMBER = 'hiresafe'
-    PARTYA = '254798904053'
-    LNM_CALLBACK = 'https://felix-mutinda-1.paiza-user.cloud:3000/payments/lnm_callback'
+    PARTYA = current_user.mobile
+    LNM_CALLBACK = 'https://hiresafe.herokuapp.com/payments/lnm_callback'
     TRANSACTIONDESC = 'Car Hire Payment'
     ACCOUNTREFERENCE = 'hiresafe'
     
         # register url
         RESPONSE_TYPE = "Cancelled"
-        CONFIRMATION_URL = 'https://felix-mutinda-1.paiza-user.cloud:3000/payments/confirm'
-        VALIDATION_URL = 'https://felix-mutinda-1.paiza-user.cloud:3000/payments/validate'
+        CONFIRMATION_URL = 'https://hiresafe.herokuapp.com/payments/confirm'
+        VALIDATION_URL = 'https://hiresafe.herokuapp.com/payments/validate'
         
         
         
@@ -48,7 +48,7 @@ class PaymentsController < ApplicationController
     end
     
     def stkpush
-        render plain: stk_push
+        render json: stk_push
     end
     
     # validation and confirmation URLs, publicly available
