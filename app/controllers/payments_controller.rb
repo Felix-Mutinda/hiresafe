@@ -21,7 +21,7 @@ class PaymentsController < ApplicationController
     LNM_SHORTCODE = '174379'
     SIMULATE_AMOUNT = '1'
     BILLREFNUMBER = 'hiresafe'
-    PARTYA = current_user.mobile
+    PARTYA = '254798904053'
     LNM_CALLBACK = 'https://hiresafe.herokuapp.com/payments/lnm_callback'
     TRANSACTIONDESC = 'Car Hire Payment'
     ACCOUNTREFERENCE = 'hiresafe'

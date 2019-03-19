@@ -79,11 +79,11 @@ class DashboardsController < ApplicationController
 		session[:hire_days] = session[:end_date].day - session[:start_date].day
 
 		if !params[:model].strip.empty?
-			@available_cars = @available_cars.where("model  like ?", '%'+params[:model]+'%')
+			@available_cars = @available_cars.where("model  ilike ?", '%'+params[:model]+'%')
 		end
 		
 		if !params[:location].strip.empty?
-			@available_cars = @available_cars.where("location like ?", '%'+params[:location]+'%')
+			@available_cars = @available_cars.where("location ilike ?", '%'+params[:location]+'%')
 		end
 		
 		cars = @available_cars

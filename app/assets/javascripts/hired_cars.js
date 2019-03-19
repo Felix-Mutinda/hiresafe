@@ -1,6 +1,6 @@
 $(document).ready(function() {
-    let lnmBtn = $("#lnm-initiate");
-    let url = "/payments/stk_push";
+    var lnmBtn = $("#lnm-initiate");
+    var url = "/payments/stk_push";
     
     lnmBtn.click(function(e) {
         // disable btn to avoid multiple requests
