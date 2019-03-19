@@ -118,6 +118,7 @@
 												<strong>Payment: </strong><em class="text-danger"> <%= car[1].payment %></em><br>
 												<% else %>
 												<strong>Payment: </strong><em class="text-success"> <%= car[1].payment %></em><br>
+												<strong>Mpesa Receipt: </strong><em class="text-success"> <%= car[1].MpesaReceiptNumber %></em><br>
 												<% end %>
 											</div>
 										</div>
@@ -125,6 +126,7 @@
 										<div class="clearfix"></div>
 										<hr>
 										<div class="lnm">
+										  <% if car[1].payment.  == "pending" %>
 										    <%= image_tag "lnm-logo.png", class: "lnm-logo" %>
 										    <button class="btn  btn-fill btn-success" id="lnm-initiate">Click to pay 
 										        <%=
@@ -145,6 +147,13 @@
 										            <li class="list-group-item">You will receive an SMS confirming the transaction </li>
 										        </ul>
 										    </fieldset>
+										 <% else %>
+										     <button class="btn btn-fill btn-info pull-right" id="lnm-print-receipt">
+										         <i class="fa fa-print"></i>
+										         Print Receipt
+										     </button>
+										     <div class="clearfix"></div>
+										 <% end %>
 										</div>
 									<% end %>
 								<% else %>
